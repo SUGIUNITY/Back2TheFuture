@@ -2,14 +2,19 @@ p {
     margin: 0;
 }
 
+body {
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin: 0;
+}
+
 .container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 75vh;
-    width: 60vw;
+    height: 100vh;
+    width: 100vw;
     background-color: rgb(63, 201, 201);
-    outline: 2px solid black;
+    outline: .2vh solid black;
 }
 
 .top-page {
@@ -20,10 +25,8 @@ p {
     width: 98%;
     background-color: aliceblue;
     margin-top: 1vh;
-    border-radius: 15px;
-    outline: 2px solid black;
-    /*padding-inline: 1vh;*/
-    /* height: 7%; */
+    border-radius: 2vh;
+    outline: .2vh solid black; 
 }
 
 .title {
@@ -36,11 +39,12 @@ p {
     font-size: 6vh;
     margin: 0;
     color: rgb(22, 128, 128);
-    
-    -webkit-text-stroke: 1px rgb(2, 54, 61);
-    /* text-shadow: -1px -1px 0 white, 1px -1px 0 white, 1px 1px 0 white, -1px 1px 0 white; */
+
+    text-shadow: -1px -1px 0 rgb(2, 54, 61), 1px -1px 0 rgb(2, 54, 61), 1px 1px 0 rgb(2, 54, 61), -1px 1px 0 rgb(2, 54, 61);
+     -webkit-text-stroke: 1px rgb(255, 255, 255); 
 
 }
+
 
 .user-info {
     display: flex;
@@ -69,25 +73,25 @@ p {
     justify-content: center;
     width: 20vh;
     background-color: rgb(43, 172, 172);
-    border-radius: 20px;
+    border-radius: 3vh;
     margin-left: 1vw;
-    outline: 2px solid black;
+    outline: .2vh solid black;
 }
 
 .side-button {
-    background-color: rgb(43, 172, 172);
+    background-image: linear-gradient(rgb(255, 255, 255), rgb(74, 182, 173), rgb(2, 63, 71));
     font-size: 2vh;
     width: 80%;
-    height: 8%;
+    height: 6%;
     margin-bottom: 1vh;
     color: white;
-    border-radius: 10px;
-    box-shadow: 0 6px 16px 0 rgba(0,0,0,0.2);
-    transition-duration: 0.4s;
+    border-radius: 1vh;
+    box-shadow: 0 .5vh 2vh 0 rgba(0,0,0,0.2);
+    border: .2vh solid black;
 }
 
 .side-button:hover {
-    background-color: rgb(20, 133, 133);
+    background-image: linear-gradient(rgb(20, 133, 133));
 }
 
 .main {
@@ -95,8 +99,8 @@ p {
     flex-direction: column; 
     width: 100%;
     background-color: white;
-    border-radius: 80px;
-    outline: 2px solid black;
+    border-radius: 10vh;
+    outline: .2vh solid black;
     justify-content: center;
     align-items: center;
     font-size: 1.7vh;
@@ -107,7 +111,7 @@ p {
     margin-top: 2%;
     width: 90%;
     height: 75%;
-    outline: 2px solid black;
+    outline: .2vh solid black;
     text-align: center;
     
 }
@@ -117,6 +121,6 @@ p {
     margin-bottom: 2%;
     width: 90%;
     height: 25%;
-    outline: 2px solid black;
+    outline: .2vh solid black;
     text-align: center;
 }
