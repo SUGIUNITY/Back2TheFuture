@@ -13,8 +13,8 @@ body {
     align-items: center;
     height: 100vh;
     width: 100vw;
-    background-color: rgb(63, 201, 201);
-    outline: .2vh solid black;
+    background-color: rgb(104, 219, 219);
+    outline: .4vh solid rgb(11, 116, 185);
 }
 
 .top-page {
@@ -23,28 +23,44 @@ body {
     justify-content: space-between;
     align-items: center;
     width: 98%;
-    background-color: aliceblue;
+    background-color: rgb(224, 241, 254);
     margin-top: 1vh;
     border-radius: 2vh;
-    outline: .2vh solid black; 
+    outline: .4vh solid rgb(11, 116, 185);
+    height: 10vh;
 }
 
 .title {
+    display: flex;
+    align-items: center;
+    height: inherit;
     display: flex;
     flex-direction: row-reverse;
     margin-right: 1vw;
 }
 
-.page-name {
-    font-size: 6vh;
-    margin: 0;
-    color: rgb(22, 128, 128);
-
-    text-shadow: -1px -1px 0 rgb(2, 54, 61), 1px -1px 0 rgb(2, 54, 61), 1px 1px 0 rgb(2, 54, 61), -1px 1px 0 rgb(2, 54, 61);
-     -webkit-text-stroke: 1px rgb(255, 255, 255); 
-
+.title-img {
+    height: 80%;
 }
 
+.page-name {
+    font-size: 5vw;
+    margin: 0;
+    color: rgb(10, 90, 171);
+    -webkit-text-stroke: .8vw rgb(66, 216, 204);
+    letter-spacing: .8vh;
+    text-shadow: 0 1vh .3vh rgba(0,0,0,0.2);
+    /* text-shadow: -1px -1px 0 rgb(2, 54, 61), 1px -1px 0 rgb(2, 54, 61), 1px 1px 0 rgb(2, 54, 61), -1px 1px 0 rgb(2, 54, 61);
+    -webkit-text-stroke: 1px rgb(255, 255, 255);  */
+}
+
+.page-name::before {
+    z-index: 1;
+    content:"בחזרה לעתיד";
+    -webkit-text-stroke: .1vw rgb(255, 255, 255);
+    /* text-shadow: -.2vw -.2vw 0 white, .2vw -.2vw 0 white, .2vw .2vw 0 white, -.2vw .2vw 0 white; */
+    position: absolute;
+}
 
 .user-info {
     display: flex;
@@ -62,8 +78,8 @@ body {
     justify-content: space-between;
     width: 98%;
     height: 100%;
-    margin-top: 1vh;
-    margin-bottom: 1vh;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
 }
 
 .sidebar {
@@ -71,27 +87,31 @@ body {
     flex-direction: column; 
     align-items: center;
     justify-content: center;
-    width: 20vh;
-    background-color: rgb(43, 172, 172);
-    border-radius: 3vh;
+    width: 60vh;
+    background-color: rgb(14, 209, 209);
+    border-radius: 5vh;
     margin-left: 1vw;
-    outline: .2vh solid black;
+    outline: .4vh solid rgb(11, 116, 185);
 }
 
 .side-button {
-    background-image: linear-gradient(rgb(255, 255, 255), rgb(74, 182, 173), rgb(2, 63, 71));
-    font-size: 2vh;
-    width: 80%;
-    height: 6%;
+    background-image: linear-gradient(rgb(255, 255, 255), 15%, rgb(13, 207, 234), 90%, rgb(2, 63, 71));
+    /* background-image: linear-gradient(to bottom, rgb(255, 255, 255, 0.8) 15%, rgb(13, 207, 234, 0.8) 90%, rgb(255, 255, 255, 0.5)),
+    linear-gradient(to left, rgb(2, 63, 71, 1) 15%, rgb(13, 207, 234, 1) 85%, rgb(2, 63, 71, 1)); */
+    /* background-image: linear-gradient(to right, rgb(2, 63, 71), rgb(13, 207, 234), rgb(2, 63, 71)); */
+    font-size: 3vh;
+    width: 50%;
+    height: 9%;
     margin-bottom: 1vh;
     color: white;
     border-radius: 1vh;
-    box-shadow: 0 .5vh 2vh 0 rgba(0,0,0,0.2);
+    box-shadow: 0 1vh 1vh rgba(0,0,0,0.2);
     border: .2vh solid black;
+    white-space: nowrap;
 }
 
 .side-button:hover {
-    background-image: linear-gradient(rgb(20, 133, 133));
+    background-image: linear-gradient(rgb(22, 132, 132), rgb(22, 132, 132));
 }
 
 .main {
@@ -99,28 +119,32 @@ body {
     flex-direction: column; 
     width: 100%;
     background-color: white;
-    border-radius: 10vh;
-    outline: .2vh solid black;
+    border-radius: 7vw;
+    outline: .4vh solid rgb(11, 116, 185);;
     justify-content: center;
     align-items: center;
     font-size: 1.7vh;
     font-weight: 700;
+    background-color: aliceblue;
 }
 
 .all-details {
+    font-size: 3vh;
     margin-top: 2%;
-    width: 90%;
+    width: 85%;
     height: 75%;
-    outline: .2vh solid black;
+    outline: .4vh solid rgb(11, 116, 185);
     text-align: center;
-    
+    background-color: white;
 }
 
 .specific-details {
+    font-size: 3vh;
     margin-top: 1%;
     margin-bottom: 2%;
-    width: 90%;
+    width: 85%;
     height: 25%;
-    outline: .2vh solid black;
+    outline: .4vh solid rgb(11, 116, 185);
     text-align: center;
+    background-color: white;
 }
