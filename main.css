@@ -73,12 +73,17 @@ body {
   padding-inline: 0.8vw;
 }
 
-#clock_value {
+.clock_box {
+  display: flex;
+  align-items: center;
   background-image: linear-gradient(white, yellow);
-  font-size: 1.6vw;
   height: 4vh;
   box-shadow: 0 0.6vh 1vh rgba(0, 0, 0, 0.5);
   border: none;
+}
+
+#clock_value {
+  font-size: 1.6vw;
 }
 
 .user_info {

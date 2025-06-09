@@ -10,7 +10,8 @@ manageClock = (event) => {
 
   if (is_clock_running) {
     startClock();
-    document.getElementById("start_clock").textContent = "עצור";
+    clockInterval = setInterval(startClock, 1000);
+    document.getElementById("start_clock").textContent = "הפסק";
   } else {
     clearTimeout(clockInterval);
     document.getElementById("start_clock").textContent = "הפעל";
@@ -18,21 +19,8 @@ manageClock = (event) => {
 };
 
 startClock = () => {
-  const date = new Date();
-  let hours = date.getHours();
-  let minutes = date.getMinutes();
-  let seconds = date.getSeconds();
-  minutes = checkTime(minutes);
-  seconds = checkTime(seconds);
   document.getElementById("clock_value").textContent =
-    hours + ":" + minutes + ":" + seconds;
-  clockInterval = setTimeout(startClock, 1000);
-};
-
-checkTime = (time) => {
-  if (time < 10) {
-    time = "0" + time;
-  }
-
-  return time;
+    new Date().toLocaleTimeString("he-IL", {
+      hour12: false,
+    });
 };
