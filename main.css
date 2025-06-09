@@ -1,5 +1,5 @@
 body {
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, "Segoe UI", sans-serif;
     margin: 0;
     direction: rtl;
 }
@@ -14,7 +14,7 @@ body {
     outline: .4vh solid rgb(11, 116, 185);
 }
 
-.top-page {
+.top_page {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -34,11 +34,11 @@ body {
     margin-right: 1vw;
 }
 
-.title-img {
+.title_img {
     height: 80%;
 }
 
-.page-name {
+.page_name {
     font-size: 5vw;
     margin: 0;
     color: rgb(10, 90, 171);
@@ -50,14 +50,14 @@ body {
     padding-bottom: 1vh;
 }
 
-.page-name::before {
+.page_name::before {
     z-index: 1;
-    content:"בחזרה לעתיד";
+    content: "בחזרה לעתיד";
     -webkit-text-stroke: .1vw rgb(255, 255, 255);
     position: absolute;
 }
 
-.user-info {
+.user_info {
     display: flex;
     flex-direction: column;
     align-items: end;
@@ -65,7 +65,7 @@ body {
      font-weight: 700;
 }
 
-.bottom-page {
+.bottom_page {
     display: flex;
     justify-content: space-between;
     width: 98%;
@@ -86,26 +86,31 @@ body {
     outline: .4vh solid rgb(11, 116, 185);
 }
 
-.side-button {
-    background-image: linear-gradient(rgb(255, 255, 255, 0.8), rgb(13, 207, 234, 0.5), rgb(2, 63, 71, 0) 50%),
+.side_button {
+    /* background-image: linear-gradient(rgb(255, 255, 255, 0.8), rgb(13, 207, 234, 0.5), rgb(2, 63, 71, 0) 50%),
     linear-gradient(to left, rgb(2, 63, 71, 0.8), rgb(13, 207, 234, 0.5), rgb(13, 207, 234, 0) 70.71%), 
-    linear-gradient(to right, rgb(2, 63, 71, 0.8), rgb(13, 207, 234, 0.5), rgb(13, 207, 234, 0) 70.71%);
+    linear-gradient(to right, rgb(2, 63, 71, 0.8), rgb(13, 207, 234, 0.5), rgb(13, 207, 234, 0) 70.71%); */
+    background-color: rgb(13, 207, 234, 0.5);
+    box-shadow: 1vh 0 1vh rgba(0, 0, 0, 0.5) inset,
+    -1vh 0 1vh rgba(0, 0, 0, 0.5) inset,
+    0 1vh 1vh rgba(255, 255, 255, 0.8) inset,
+    0 -1vh 1vh rgba(255, 255, 255, 0.8) inset,
+    0 1vh 1vh rgba(0,0,0,0.2), 1vh 0vh 1vh rgba(0,0,0,0.2), -1vh 0vh 1vh rgba(0,0,0,0.2);
     font-size: 3vh;
     width: 50%;
     height: 9%;
     margin-bottom: 1vh;
     color: white;
     border-radius: 1vh;
-    box-shadow: 0 1vh 1vh rgba(0,0,0,0.2);
     border: .2vh solid black;
     white-space: nowrap;
 }
 
-.side-button:hover {
+.side_button:hover {
     background-image: linear-gradient(rgb(22, 132, 132), rgb(22, 132, 132));
 }
 
-.main {
+.main_box {
     display: flex;
     flex-direction: column; 
     width: 100%;
@@ -119,7 +124,7 @@ body {
     background-color: aliceblue;
 }
 
-.all-details {
+.all_details {
     font-size: 3vh;
     margin-top: 2%;
     width: 85%;
@@ -129,7 +134,7 @@ body {
     background-color: white;
 }
 
-.specific-details {
+.specific_details {
     font-size: 3vh;
     margin-top: 1%;
     margin-bottom: 2%;
