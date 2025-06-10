@@ -1,3 +1,5 @@
+// import { youngsters } from "./data.js";
+
 const youngsters = [
   {
     "מספר צעיר": 1,
