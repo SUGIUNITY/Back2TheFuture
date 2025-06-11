@@ -63,6 +63,7 @@ const showYoungsters = (event) => {
     youngsters.forEach((item) => {
       const tableRow = table.insertRow();
       tableRow.classList.add("table_row");
+      tableRow.addEventListener("click", showSpecificDetailsOfYoungster);
 
       tableData.forEach((element) => {
         const tableColumn = tableRow.insertCell();
@@ -91,5 +92,34 @@ const showYoungsters = (event) => {
     tableShown = true;
   } else {
     console.log("youngsters is empty or currently shown");
+  }
+};
+
+//specific details
+const showSpecificDetailsOfYoungster = (event) => {
+  const specifiedData = { "שם הצעיר": "שם", תחביב: "תחביב", ספר: "ספר" };
+
+  const youngsterNumber = event.target.parentElement.children[0].textContent;
+  const youngsterClicked = getYoungsterByNumber(youngsterNumber);
+
+  //add specific details
+  document.getElementById(
+    "specific_details_text_name"
+  ).textContent = `${specifiedData["שם הצעיר"]}: ${youngsterClicked["שם הצעיר"]}`;
+
+  document.getElementById(
+    "specific_details_text_hobby"
+  ).textContent = `${specifiedData["תחביב"]}: ${youngsterClicked["תחביב"]}`;
+
+  document.getElementById(
+    "specific_details_text_book"
+  ).textContent = `${specifiedData["ספר"]}: ${youngsterClicked["ספר"]}`;
+};
+
+const getYoungsterByNumber = (youngsterNumber) => {
+  for (let index = 0; index < youngsters.length; index++) {
+    if (youngsters[index]["מספר הצעיר"] == youngsterNumber) {
+      return youngsters[index];
+    }
   }
 };

@@ -200,3 +200,11 @@ body {
   text-align: center;
   background-color: white;
 }
+
+#specific_details_text {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  font-size: 3vh;
+  margin-top: 1%;
+}
