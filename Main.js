@@ -55,7 +55,7 @@ const showYoungsters = (event) => {
       const tableTitleColumn = tableTitle.insertCell();
       tableTitleColumn.style.backgroundColor = "black";
       tableTitleColumn.style.color = "white";
-      tableTitleColumn.style.paddingRight = "1vw";
+
       tableTitleColumn.appendChild(document.createTextNode(key));
     });
 
@@ -67,7 +67,6 @@ const showYoungsters = (event) => {
 
       tableData.forEach((element) => {
         const tableColumn = tableRow.insertCell();
-        tableColumn.style.paddingRight = "1vw";
         tableColumn.appendChild(
           document.createTextNode(
             item[element] != undefined ? item[element] : ""

@@ -44,7 +44,6 @@ body {
   color: rgb(10, 90, 171);
   -webkit-text-stroke: 0.8vw rgb(66, 216, 204);
   letter-spacing: 0.8vh;
-  text-shadow: 0 1vh 0.3vh rgba(0, 0, 0, 0.2);
   white-space: nowrap;
   margin-right: 2vw;
   padding-bottom: 1vh;
@@ -57,10 +56,15 @@ body {
   position: absolute;
 }
 
+.left_side_top {
+  display: flex;
+}
+
 .clock {
   display: flex;
   align-items: center;
   height: inherit;
+  margin-left: 2vw;
 }
 
 #start_clock {
@@ -68,6 +72,7 @@ body {
   height: 6vh;
   width: 7vw;
   box-shadow: 0 0.6vh 1vh rgba(0, 0, 0, 0.5);
+  background-image: linear-gradient(white, rgb(88, 88, 88));
   margin-left: 0.4vw;
   border-width: 0.3vh;
   padding-inline: 0.8vw;
@@ -108,7 +113,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 60vh;
+  width: 40vh;
   background-color: rgb(14, 209, 209);
   border-radius: 5vh;
   margin-left: 1vw;
@@ -142,6 +147,13 @@ body {
     1vh 0vh 1vh rgba(0, 0, 0, 0.2), -1vh 0vh 1vh rgba(0, 0, 0, 0.2);
 }
 
+.side_button:focus {
+  box-shadow: 1vh 0 1vh rgba(255, 255, 255) inset,
+    -1vh 0 1vh rgba(255, 255, 255) inset, 0 1vh 1vh rgba(255, 255, 255) inset,
+    0 -1vh 1vh rgba(255, 255, 255) inset, 0 1vh 1vh rgba(0, 0, 0, 0.2),
+    1vh 0vh 1vh rgba(0, 0, 0, 0.2), -1vh 0vh 1vh rgba(0, 0, 0, 0.2);
+}
+
 #main_box {
   display: flex;
   flex-direction: column;
@@ -154,6 +166,10 @@ body {
   font-size: 1.7vh;
   font-weight: 700;
   background-color: aliceblue;
+}
+
+.details_title {
+  position: absolute;
 }
 
 #all_details_title {
@@ -169,12 +185,40 @@ body {
   background-color: white;
 }
 
+.table_container {
+  height: 100%;
+  width: inherit;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .scroll {
   background-color: white;
   overflow-y: auto;
   width: inherit;
-  height: inherit;
+  height: 40vmin;
   direction: ltr;
+  /* scrollbar-color: #506dceb8 rgb(213, 213, 213); */
+}
+
+.scroll::-webkit-scrollbar {
+  width: 2.5vmin;
+}
+
+.scroll::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 1.5vmin grey;
+  border-radius: 2.5vmin;
+}
+
+.scroll::-webkit-scrollbar-thumb {
+  background: #506dceb8;
+  border-radius: 2.5vmin;
+}
+
+.scroll::-webkit-scrollbar-thumb:hover {
+  background: #395ac5;
 }
 
 #all_details {
@@ -191,6 +235,8 @@ body {
 }
 
 .specific_details {
+  display: flex;
+  justify-content: center;
   font-size: 3vh;
   margin-top: 1%;
   margin-bottom: 2%;
@@ -201,9 +247,14 @@ body {
   background-color: white;
 }
 
+td {
+  padding-right: 1vw;
+}
+
 #specific_details_text {
   display: flex;
   justify-content: space-around;
+  align-items: center;
   width: 100%;
   font-size: 3vh;
   margin-top: 1%;
