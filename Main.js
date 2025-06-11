@@ -54,11 +54,12 @@ startClock = () => {
 };
 
 //youngsters---------------------------------------------------------------
+let tableShown = false;
 
 showYoungsters = (event) => {
   const tableData = ["מספר הצעיר", "שם הצעיר", "מיקום המגורים", "טלפון"];
 
-  if (youngsters.length > 0) {
+  if (youngsters.length > 0 && !tableShown) {
     const mainBox = document.getElementById("all_details");
     const table = document.createElement("table");
 
@@ -107,6 +108,7 @@ showYoungsters = (event) => {
     });
 
     mainBox.appendChild(table);
+    tableShown = true;
   } else {
     console.log("youngsters is empty");
   }
