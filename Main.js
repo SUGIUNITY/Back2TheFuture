@@ -2,21 +2,21 @@
 
 const youngsters = [
   {
-    "מספר צעיר": 1,
+    "מספר הצעיר": 1,
     "שם הצעיר": "חבר פרבר",
-    "מיקום מגורים": "פני חבר",
+    "מיקום המגורים": "פני חבר",
     טלפון: "058-5675444",
   },
   {
-    "מספר צעיר": 46,
+    "מספר הצעיר": 46,
     "שם הצעיר": "עדי שטיינר",
-    "מיקום מגורים": "להבים",
+    "מיקום המגורים": "להבים",
     טלפון: "051-1234567",
   },
   {
-    "מספר צעיר": 99,
+    "מספר הצעיר": 99,
     "שם הצעיר": "סאני סימן-טוב",
-    "מיקום מגורים": "חולון",
+    "מיקום המגורים": "חולון",
     טלפון: "012-1234567",
   },
 ];
@@ -56,6 +56,8 @@ startClock = () => {
 //youngsters---------------------------------------------------------------
 
 showYoungsters = (event) => {
+  const tableData = ["מספר הצעיר", "שם הצעיר", "מיקום המגורים", "טלפון"];
+
   if (youngsters.length > 0) {
     const mainBox = document.getElementById("all_details");
     const table = document.createElement("table");
@@ -66,10 +68,9 @@ showYoungsters = (event) => {
     table.style.textWrap = "nowrap";
 
     // table title
-    const youngstersKeys = Object.keys(youngsters[0]);
     const tableTitle = table.insertRow();
 
-    youngstersKeys.forEach((key) => {
+    tableData.forEach((key) => {
       const tableTitleColumn = tableTitle.insertCell();
       tableTitleColumn.style.backgroundColor = "black";
       tableTitleColumn.style.color = "white";
@@ -77,26 +78,32 @@ showYoungsters = (event) => {
       tableTitleColumn.appendChild(document.createTextNode(key));
     });
 
-    let isEven = true;
-
+    //table data
     youngsters.forEach((item) => {
       const tableRow = table.insertRow();
+      tableRow.classList.add("table_row");
 
-      if (isEven) {
-        tableRow.style.backgroundColor = "#8080806b";
-      } else {
-        tableRow.style.backgroundColor = "#95a7e3b8";
-      }
-
-      isEven = !isEven;
-
-      const youngstersValues = Object.values(item);
-
-      youngstersValues.forEach((value) => {
+      tableData.forEach((element) => {
         const tableColumn = tableRow.insertCell();
         tableColumn.style.paddingRight = "1vw";
-        tableColumn.appendChild(document.createTextNode(value));
+        tableColumn.appendChild(
+          document.createTextNode(
+            item[element] != undefined ? item[element] : ""
+          )
+        );
       });
+      //   const youngstersValues = Object.values(item);
+
+      //   youngstersValues.forEach((value) => {
+      //     if (tableData.includes(value)) {
+      //       const tableColumn = tableRow.insertCell();
+      //       tableColumn.style.paddingRight = "1vw";
+      //       tableColumn.appendChild(document.createTextNode(value));
+      //     } else {
+      //       console.log(tableData);
+      //       console.log(value);
+      //     }
+      //   });
     });
 
     mainBox.appendChild(table);

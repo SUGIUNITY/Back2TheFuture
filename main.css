@@ -169,6 +169,14 @@ body {
   background-color: white;
 }
 
+.table_row {
+  background-color: #8080806b;
+}
+
+.table_row:hover {
+  background-color: #95a7e3b8;
+}
+
 .specific_details {
   font-size: 3vh;
   margin-top: 1%;
