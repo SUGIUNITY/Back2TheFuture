@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="Main.css" />
-    <script src="Main.js"></script>
-    <!-- <script type="module" src="data.js"></script> -->
+    <script type="module" src="Main.js"></script>
+    <script type="module" src="data.js"></script>
     <title>Aliens</title>
   </head>
   <body>
@@ -40,7 +40,12 @@
           <button class="side_button">מרחב גלקטי</button>
         </div>
         <div id="main_box">
-          <div id="all_details">כל הפרטים:</div>
+          <div id="all_details_title">
+            כל הפרטים:
+            <div class="scroll">
+              <div id="all_details"></div>
+            </div>
+          </div>
           <div class="specific_details">פרטים ספציפיים:</div>
         </div>
       </div>

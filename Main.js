@@ -1,25 +1,4 @@
-// import { youngsters } from "./data.js";
-
-const youngsters = [
-  {
-    "מספר הצעיר": 1,
-    "שם הצעיר": "חבר פרבר",
-    "מיקום המגורים": "פני חבר",
-    טלפון: "058-5675444",
-  },
-  {
-    "מספר הצעיר": 46,
-    "שם הצעיר": "עדי שטיינר",
-    "מיקום המגורים": "להבים",
-    טלפון: "051-1234567",
-  },
-  {
-    "מספר הצעיר": 99,
-    "שם הצעיר": "סאני סימן-טוב",
-    "מיקום המגורים": "חולון",
-    טלפון: "012-1234567",
-  },
-];
+import { youngsters } from "./data.js";
 
 //clock---------------------------------------------------------------------
 
@@ -30,10 +9,10 @@ document.addEventListener("DOMContentLoaded", (event) => {
     .addEventListener("click", showYoungsters);
 });
 
-is_clock_running = false;
-clockInterval = null;
+let is_clock_running = false;
+let clockInterval = null;
 
-manageClock = (event) => {
+const manageClock = (event) => {
   is_clock_running = !is_clock_running;
 
   if (is_clock_running) {
@@ -46,7 +25,7 @@ manageClock = (event) => {
   }
 };
 
-startClock = () => {
+const startClock = () => {
   document.getElementById("clock_value").textContent =
     new Date().toLocaleTimeString("he-IL", {
       hour12: false,
@@ -56,20 +35,21 @@ startClock = () => {
 //youngsters---------------------------------------------------------------
 let tableShown = false;
 
-showYoungsters = (event) => {
-  const tableData = ["מספר הצעיר", "שם הצעיר", "מיקום המגורים", "טלפון"];
+const showYoungsters = (event) => {
+  const tableData = ["מספר הצעיר", "שם הצעיר", "מיקום מגורים", "טלפון"];
 
   if (youngsters.length > 0 && !tableShown) {
     const mainBox = document.getElementById("all_details");
     const table = document.createElement("table");
 
-    table.style.width = "80%";
+    table.style.width = "100%";
     table.style.textAlign = "start";
     table.style.fontWeight = "200";
     table.style.textWrap = "nowrap";
 
     // table title
-    const tableTitle = table.insertRow();
+    const tableHeader = table.createTHead();
+    const tableTitle = tableHeader.insertRow();
 
     tableData.forEach((key) => {
       const tableTitleColumn = tableTitle.insertCell();
@@ -110,6 +90,6 @@ showYoungsters = (event) => {
     mainBox.appendChild(table);
     tableShown = true;
   } else {
-    console.log("youngsters is empty");
+    console.log("youngsters is empty or currently shown");
   }
 };
