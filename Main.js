@@ -1,15 +1,26 @@
 import { youngsters } from "./data.js";
 
-//clock---------------------------------------------------------------------
-
 document.addEventListener("DOMContentLoaded", (event) => {
   manageClock();
   document.getElementById("start_clock").addEventListener("click", manageClock);
   document
     .getElementById("youngsters")
     .addEventListener("click", showYoungsters);
+  [...document.getElementsByClassName("side_button")].forEach((button) => {
+    button.addEventListener("click", focusButton);
+  });
 });
 
+//button pressed---------------------------------------------------------------------
+let currentSidebarButtonPressed = null;
+
+const focusButton = (event) => {
+  currentSidebarButtonPressed?.classList.remove("button_focus");
+  currentSidebarButtonPressed = event.target;
+  currentSidebarButtonPressed.classList.add("button_focus");
+};
+
+//clock---------------------------------------------------------------------
 let is_clock_running = false;
 let clockInterval = null;
 
@@ -107,9 +118,9 @@ const ONE_SET_OF_DETAILS = 1;
 const DETAILS_ADDER = 2;
 let currentMode = ONE_SET_OF_DETAILS;
 
-//specific details
+//specific details---------------------------------------------------------------
 const showSpecificDetailsOfYoungster = (event) => {
-  checkCurrentMode(event);
+  matchSettingsToCurrentMode(event);
 
   const specifiedData = { "שם הצעיר": "שם", תחביב: "תחביב", ספר: "ספר" };
 
@@ -120,7 +131,7 @@ const showSpecificDetailsOfYoungster = (event) => {
   addDetails(specifiedData, youngsterClicked);
 };
 
-const checkCurrentMode = (event) => {
+const matchSettingsToCurrentMode = (event) => {
   if (currentMode !== DETAILS_ADDER) {
     //clears currently clicked youngsters
     currentlyClickedYoungsters.forEach((youngster) => {

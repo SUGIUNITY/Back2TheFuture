@@ -149,7 +149,15 @@ body {
     1vmin 0 1vmin rgba(0, 0, 0, 0.2), -1vmin 0 1vmin rgba(0, 0, 0, 0.2);
 }
 
-.side_button:focus {
+/* .side_button:focus {
+  box-shadow: 1vmin 0 1vmin rgba(255, 255, 255) inset,
+    -1vmin 0 1vmin rgba(255, 255, 255) inset,
+    0 1vmin 1vmin rgba(255, 255, 255) inset,
+    0 -1vmin 1vmin rgba(255, 255, 255) inset, 0 1vmin 1vmin rgba(0, 0, 0, 0.2),
+    1vmin 0 1vmin rgba(0, 0, 0, 0.2), -1vmin 0 1vmin rgba(0, 0, 0, 0.2);
+} */
+
+.button_focus {
   box-shadow: 1vmin 0 1vmin rgba(255, 255, 255) inset,
     -1vmin 0 1vmin rgba(255, 255, 255) inset,
     0 1vmin 1vmin rgba(255, 255, 255) inset,
