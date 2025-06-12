@@ -9,6 +9,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
   [...document.getElementsByClassName("side_button")].forEach((button) => {
     button.addEventListener("click", focusButton);
   });
+  document
+    .getElementById("youngsters_details_adder_mode")
+    .addEventListener("click", detailsAdderMode);
 });
 
 //button pressed---------------------------------------------------------------------
@@ -129,6 +132,23 @@ const DETAILS_ADDER = 2;
 let currentMode = ONE_SET_OF_DETAILS;
 
 //specific details---------------------------------------------------------------
+const detailsAdderMode = (event) => {
+  if (currentMode === ONE_SET_OF_DETAILS) {
+    clearCurrentlyClickedYoungsters();
+
+    currentMode = DETAILS_ADDER;
+
+    event.target.classList.add("youngsters_details_adder_mode_active");
+    event.target.textContent = "-";
+  } else {
+    currentMode = ONE_SET_OF_DETAILS;
+
+    clearCurrentlyClickedYoungsters();
+    event.target.classList.remove("youngsters_details_adder_mode_active");
+    event.target.textContent = "+";
+  }
+};
+
 const showSpecificDetailsOfYoungster = (event) => {
   matchSettingsToCurrentMode(event);
 
@@ -142,17 +162,7 @@ const showSpecificDetailsOfYoungster = (event) => {
 };
 
 const matchSettingsToCurrentMode = (event) => {
-  if (currentMode !== DETAILS_ADDER) {
-    //clears currently clicked youngsters
-    currentlyClickedYoungsters.forEach((youngster) => {
-      youngster.classList.remove(
-        "multiple_youngsters_clicked_mode",
-        "one_youngster_clicked_mode"
-      );
-    });
-
-    currentlyClickedYoungsters = [];
-  }
+  clearCurrentlyClickedYoungsters();
 
   //adds to array
   event.target.parentElement.classList.add(
@@ -164,6 +174,20 @@ const matchSettingsToCurrentMode = (event) => {
   );
 
   currentlyClickedYoungsters.push(event.target.parentElement);
+};
+
+const clearCurrentlyClickedYoungsters = () => {
+  if (currentMode !== DETAILS_ADDER) {
+    //clears currently clicked youngsters
+    currentlyClickedYoungsters.forEach((youngster) => {
+      youngster.classList.remove(
+        "multiple_youngsters_clicked_mode",
+        "one_youngster_clicked_mode"
+      );
+    });
+
+    currentlyClickedYoungsters = [];
+  }
 };
 
 const getYoungsterByNumber = (youngsterNumber) => {

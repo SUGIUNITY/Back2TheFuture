@@ -199,7 +199,7 @@ body {
   position: absolute;
 }
 
-#add_youngsters_details {
+#youngsters_details_adder_mode {
   position: absolute;
   width: 12vmin;
   height: 5vmin;
@@ -209,6 +209,10 @@ body {
   outline: 0.3vmin solid black;
   color: white;
   font-size: 3vmin;
+}
+
+.youngsters_details_adder_mode_active {
+  background-color: #e82a2a !important;
 }
 
 #all_details {
