@@ -97,6 +97,7 @@ body {
   align-items: end;
   margin-left: 1.5vmin;
   font-weight: 700;
+  text-wrap: nowrap;
 }
 
 .bottom_page {
@@ -166,11 +167,26 @@ body {
 }
 
 #main_box {
+  width: 100%;
+  height: 100%;
+}
+
+.hidden {
+  display: none;
+}
+
+#youngsters_page {
+  width: inherit;
+  height: inherit;
+}
+
+#youngsters_full_details {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  width: inherit;
+  height: inherit;
   background-color: white;
   border-radius: 12vmin;
   outline: 0.4vmin solid rgb(11, 116, 185);
@@ -183,7 +199,20 @@ body {
   position: absolute;
 }
 
-#all_details_title {
+#add_youngsters_details {
+  position: absolute;
+  width: 12vmin;
+  height: 5vmin;
+  left: 2vmin;
+  top: 0.5vmin;
+  background-color: #395ac5;
+  outline: 0.3vmin solid black;
+  color: white;
+  font-size: 3vmin;
+}
+
+#all_details {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -230,7 +259,7 @@ body {
   background: #395ac5;
 }
 
-#all_details {
+#all_details_data {
   background-color: white;
   direction: rtl;
 }

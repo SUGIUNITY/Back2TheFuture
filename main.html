@@ -28,36 +28,45 @@
             </div>
           </div>
           <div class="user_info">
-            <span style="font-size: 3vh">שלום פלוני אלמוני</span>
-            <span style="font-size: 1.8vh">הכניסה האחרונה שלך 11:00</span>
+            <span style="font-size: 3vmin">שלום פלוני אלמוני</span>
+            <span style="font-size: 1.8vmin">הכניסה האחרונה שלך 11:00</span>
           </div>
         </div>
       </div>
       <div class="bottom_page">
         <div class="sidebar">
-          <button class="side_button">חייזרים</button>
+          <button class="side_button" id="aliens">חייזרים</button>
           <button class="side_button" id="youngsters">צעירים</button>
-          <button class="side_button">ניהול</button>
-          <button class="side_button">מלחמה</button>
-          <button class="side_button">מרחב גלקטי</button>
+          <button class="side_button" id="management">ניהול</button>
+          <button class="side_button" id="war">מלחמה</button>
+          <button class="side_button" id="galactic_space">מרחב גלקטי</button>
         </div>
         <div id="main_box">
-          <div id="all_details_title">
-            <span class="details_title">כל הפרטים:</span>
-            <div class="table_container">
-              <div class="scroll">
-                <div id="all_details"></div>
+          <div id="aliens_page" class="hidden"></div>
+          <div id="youngsters_page" class="hidden">
+            <div id="youngsters_full_details">
+              <div id="all_details">
+                <span class="details_title">כל הפרטים:</span>
+                <button id="add_youngsters_details">+</button>
+                <div class="table_container">
+                  <div class="scroll">
+                    <div id="all_details_data"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="specific_details">
+                <span class="details_title">פרטים ספציפיים:</span>
+                <div id="specific_details_text">
+                  <span id="specific_details_text_name"></span>
+                  <span id="specific_details_text_hobby"></span>
+                  <span id="specific_details_text_book"></span>
+                </div>
               </div>
             </div>
           </div>
-          <div class="specific_details">
-            <span class="details_title">פרטים ספציפיים:</span>
-            <div id="specific_details_text">
-              <span id="specific_details_text_name"></span>
-              <span id="specific_details_text_hobby"></span>
-              <span id="specific_details_text_book"></span>
-            </div>
-          </div>
+          <div id="management_page" class="hidden"></div>
+          <div id="war_page"></div>
+          <div id="galactic_space_page" class="hidden"></div>
         </div>
       </div>
     </div>

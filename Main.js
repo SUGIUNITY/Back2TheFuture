@@ -15,9 +15,15 @@ document.addEventListener("DOMContentLoaded", (event) => {
 let currentSidebarButtonPressed = null;
 
 const focusButton = (event) => {
-  currentSidebarButtonPressed?.classList.remove("button_focus");
+  if (currentSidebarButtonPressed) {
+    currentSidebarButtonPressed.classList.remove("button_focus");
+    document
+      .getElementById(`${currentSidebarButtonPressed.id}_page`)
+      .classList.add("hidden");
+  }
   currentSidebarButtonPressed = event.target;
   currentSidebarButtonPressed.classList.add("button_focus");
+  document.getElementById(`${event.target.id}_page`).classList.remove("hidden");
 };
 
 //clock---------------------------------------------------------------------
@@ -51,7 +57,7 @@ const showYoungsters = (event) => {
   const tableData = ["מספר הצעיר", "שם הצעיר", "מיקום מגורים", "טלפון"];
 
   if (youngsters.length > 0 && !tableShown) {
-    const mainBox = document.getElementById("all_details");
+    const mainBox = document.getElementById("all_details_data");
     const table = document.createElement("table");
 
     table.style.width = "100%";
@@ -75,6 +81,8 @@ const showYoungsters = (event) => {
 const createTableHeader = (table, tableData) => {
   const tableHeader = table.createTHead();
   const tableTitle = tableHeader.insertRow();
+  tableHeader.style.top = 0;
+  tableHeader.style.position = "sticky";
 
   tableData.forEach((key) => {
     const tableTitleColumn = tableTitle.insertCell();
@@ -86,8 +94,10 @@ const createTableHeader = (table, tableData) => {
 };
 
 const addYoungstersToTable = (table, tableData, youngsters) => {
+  const tableBody = table.createTBody();
+
   youngsters.forEach((item) => {
-    const tableRow = table.insertRow();
+    const tableRow = tableBody.insertRow();
     tableRow.classList.add("table_row");
     tableRow.setAttribute("tabindex", "0");
     tableRow.addEventListener("click", showSpecificDetailsOfYoungster);
