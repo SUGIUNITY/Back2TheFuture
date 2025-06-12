@@ -234,6 +234,14 @@ body {
   background-color: #95a7e3b8;
 }
 
+.table_row:focus {
+  background-color: #95a7e3b8;
+}
+
+.multiple_youngsters_clicked_mode {
+  background-color: #f93b3bb8;
+}
+
 .specific_details {
   display: flex;
   justify-content: center;

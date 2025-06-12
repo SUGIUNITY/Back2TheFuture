@@ -3,6 +3,7 @@ import { youngsters } from "./data.js";
 //clock---------------------------------------------------------------------
 
 document.addEventListener("DOMContentLoaded", (event) => {
+  manageClock();
   document.getElementById("start_clock").addEventListener("click", manageClock);
   document
     .getElementById("youngsters")
@@ -48,44 +49,10 @@ const showYoungsters = (event) => {
     table.style.textWrap = "nowrap";
 
     // table title
-    const tableHeader = table.createTHead();
-    const tableTitle = tableHeader.insertRow();
-
-    tableData.forEach((key) => {
-      const tableTitleColumn = tableTitle.insertCell();
-      tableTitleColumn.style.backgroundColor = "black";
-      tableTitleColumn.style.color = "white";
-
-      tableTitleColumn.appendChild(document.createTextNode(key));
-    });
+    createTableHeader(table, tableData);
 
     //table data
-    youngsters.forEach((item) => {
-      const tableRow = table.insertRow();
-      tableRow.classList.add("table_row");
-      tableRow.addEventListener("click", showSpecificDetailsOfYoungster);
-
-      tableData.forEach((element) => {
-        const tableColumn = tableRow.insertCell();
-        tableColumn.appendChild(
-          document.createTextNode(
-            item[element] != undefined ? item[element] : ""
-          )
-        );
-      });
-      //   const youngstersValues = Object.values(item);
-
-      //   youngstersValues.forEach((value) => {
-      //     if (tableData.includes(value)) {
-      //       const tableColumn = tableRow.insertCell();
-      //       tableColumn.style.paddingRight = "1vw";
-      //       tableColumn.appendChild(document.createTextNode(value));
-      //     } else {
-      //       console.log(tableData);
-      //       console.log(value);
-      //     }
-      //   });
-    });
+    addYoungstersToTable(table, tableData, youngsters);
 
     mainBox.appendChild(table);
     tableShown = true;
@@ -94,14 +61,91 @@ const showYoungsters = (event) => {
   }
 };
 
+const createTableHeader = (table, tableData) => {
+  const tableHeader = table.createTHead();
+  const tableTitle = tableHeader.insertRow();
+
+  tableData.forEach((key) => {
+    const tableTitleColumn = tableTitle.insertCell();
+    tableTitleColumn.style.backgroundColor = "black";
+    tableTitleColumn.style.color = "white";
+
+    tableTitleColumn.appendChild(document.createTextNode(key));
+  });
+};
+
+const addYoungstersToTable = (table, tableData, youngsters) => {
+  youngsters.forEach((item) => {
+    const tableRow = table.insertRow();
+    tableRow.classList.add("table_row");
+    tableRow.setAttribute("tabindex", "0");
+    tableRow.addEventListener("click", showSpecificDetailsOfYoungster);
+
+    tableData.forEach((element) => {
+      const tableColumn = tableRow.insertCell();
+      tableColumn.appendChild(
+        document.createTextNode(item[element] != undefined ? item[element] : "")
+      );
+    });
+    //   const youngstersValues = Object.values(item);
+
+    //   youngstersValues.forEach((value) => {
+    //     if (tableData.includes(value)) {
+    //       const tableColumn = tableRow.insertCell();
+    //       tableColumn.style.paddingRight = "1vw";
+    //       tableColumn.appendChild(document.createTextNode(value));
+    //     } else {
+    //       console.log(tableData);
+    //       console.log(value);
+    //     }
+    //   });
+  });
+};
+
+let currentlyClickedYoungsters = [];
+const ONE_SET_OF_DETAILS = 1;
+const DETAILS_ADDER = 2;
+let currentMode = ONE_SET_OF_DETAILS;
+
 //specific details
 const showSpecificDetailsOfYoungster = (event) => {
+  checkCurrentMode(event, currentlyClickedYoungsters);
+
   const specifiedData = { "שם הצעיר": "שם", תחביב: "תחביב", ספר: "ספר" };
 
   const youngsterNumber = event.target.parentElement.children[0].textContent;
   const youngsterClicked = getYoungsterByNumber(youngsterNumber);
 
   //add specific details
+  addDetails(specifiedData, youngsterClicked);
+};
+
+const checkCurrentMode = (event, currentlyClickedYoungsters) => {
+  if (currentMode !== DETAILS_ADDER) {
+    //clears array
+    currentlyClickedYoungsters.forEach((youngster) => {
+      youngster.classList.remove("multiple_youngsters_clicked_mode");
+    });
+
+    currentlyClickedYoungsters = [];
+  } else {
+    //adds to array
+    event.target.parentElement.classList.add(
+      "multiple_youngsters_clicked_mode"
+    );
+    currentlyClickedYoungsters.push(event.target.parentElement);
+  }
+};
+
+const getYoungsterByNumber = (youngsterNumber) => {
+  for (let index = 0; index < youngsters.length; index++) {
+    if (youngsters[index]["מספר הצעיר"] == youngsterNumber) {
+      return youngsters[index];
+    }
+  }
+};
+
+const addDetails = (specifiedData, youngsterClicked) => {
   document.getElementById(
     "specific_details_text_name"
   ).textContent = `${specifiedData["שם הצעיר"]}: ${youngsterClicked["שם הצעיר"]}`;
@@ -113,12 +157,4 @@ const showSpecificDetailsOfYoungster = (event) => {
   document.getElementById(
     "specific_details_text_book"
   ).textContent = `${specifiedData["ספר"]}: ${youngsterClicked["ספר"]}`;
-};
-
-const getYoungsterByNumber = (youngsterNumber) => {
-  for (let index = 0; index < youngsters.length; index++) {
-    if (youngsters[index]["מספר הצעיר"] == youngsterNumber) {
-      return youngsters[index];
-    }
-  }
 };
