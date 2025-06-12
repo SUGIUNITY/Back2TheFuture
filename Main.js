@@ -109,7 +109,7 @@ let currentMode = ONE_SET_OF_DETAILS;
 
 //specific details
 const showSpecificDetailsOfYoungster = (event) => {
-  checkCurrentMode(event, currentlyClickedYoungsters);
+  checkCurrentMode(event);
 
   const specifiedData = { "שם הצעיר": "שם", תחביב: "תחביב", ספר: "ספר" };
 
@@ -120,21 +120,29 @@ const showSpecificDetailsOfYoungster = (event) => {
   addDetails(specifiedData, youngsterClicked);
 };
 
-const checkCurrentMode = (event, currentlyClickedYoungsters) => {
+const checkCurrentMode = (event) => {
   if (currentMode !== DETAILS_ADDER) {
-    //clears array
+    //clears currently clicked youngsters
     currentlyClickedYoungsters.forEach((youngster) => {
-      youngster.classList.remove("multiple_youngsters_clicked_mode");
+      youngster.classList.remove(
+        "multiple_youngsters_clicked_mode",
+        "one_youngster_clicked_mode"
+      );
     });
 
     currentlyClickedYoungsters = [];
-  } else {
-    //adds to array
-    event.target.parentElement.classList.add(
-      "multiple_youngsters_clicked_mode"
-    );
-    currentlyClickedYoungsters.push(event.target.parentElement);
   }
+
+  //adds to array
+  event.target.parentElement.classList.add(
+    `${
+      currentMode === ONE_SET_OF_DETAILS
+        ? "one_youngster_clicked_mode"
+        : "multiple_youngsters_clicked_mode"
+    }`
+  );
+
+  currentlyClickedYoungsters.push(event.target.parentElement);
 };
 
 const getYoungsterByNumber = (youngsterNumber) => {
