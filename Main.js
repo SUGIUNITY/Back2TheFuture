@@ -159,26 +159,25 @@ const detailsAdderMode = (event) => {
 };
 
 const showSpecificDetailsOfYoungster = (event) => {
-  matchSettingsToCurrentMode(event);
-
-  const specifiedData = { "שם הצעיר": "שם", תחביב: "תחביב", ספר: "ספר" };
-
-  const youngsterNumber = event.target.parentElement.children[0].textContent;
-  const youngsterClicked = getYoungsterByNumber(youngsterNumber);
-
-  console.log(currentlyClickedYoungsters);
-  console.log(event.target.parentElement);
-
-  //add specific details
   if (!currentlyClickedYoungsters.includes(event.target.parentElement)) {
+    currentlyClickedYoungsters.push(event.target.parentElement);
+
+    matchSettingsToCurrentMode(event);
+
+    const specifiedData = { "שם הצעיר": "שם", תחביב: "תחביב", ספר: "ספר" };
+
+    const youngsterNumber = event.target.parentElement.children[0].textContent;
+    const youngsterClicked = getYoungsterByNumber(youngsterNumber);
+
+    //add specific details
     addDetails(specifiedData, youngsterClicked);
   }
-
-  currentlyClickedYoungsters.push(event.target.parentElement);
 };
 
 const matchSettingsToCurrentMode = (event) => {
-  clearCurrentlyClickedYoungsters();
+  if (currentMode !== DETAILS_ADDER) {
+    clearCurrentlyClickedYoungsters();
+  }
 
   //adds to array
   event.target.parentElement.classList.add(
@@ -191,17 +190,17 @@ const matchSettingsToCurrentMode = (event) => {
 };
 
 const clearCurrentlyClickedYoungsters = () => {
-  if (currentMode !== DETAILS_ADDER) {
-    //clears currently clicked youngsters
-    currentlyClickedYoungsters.forEach((youngster) => {
-      youngster.classList.remove(
-        "multiple_youngsters_clicked_mode",
-        "one_youngster_clicked_mode"
-      );
-    });
+  //clears currently clicked youngsters exept last clicked
+  currentlyClickedYoungsters.forEach((youngster) => {
+    youngster.classList.remove(
+      "multiple_youngsters_clicked_mode",
+      "one_youngster_clicked_mode"
+    );
+  });
 
-    currentlyClickedYoungsters = [];
-  }
+  currentlyClickedYoungsters = currentlyClickedYoungsters.slice(-1);
+
+  currentlyClickedYoungsters[0]?.classList.add("one_youngster_clicked_mode");
 };
 
 const getYoungsterByNumber = (youngsterNumber) => {
@@ -216,9 +215,6 @@ const addDetails = (specifiedData, youngsterClicked) => {
   const specificDetailsText = document.getElementById(
     "specific_details_boxes_container"
   );
-
-  //ONE_SET_OF_DETAILS
-  removeSpecificDetailsShown(specificDetailsText);
 
   //DETAILS_ADDER
   const detailsBox = document.createElement("div");
@@ -237,12 +233,16 @@ const addDetails = (specifiedData, youngsterClicked) => {
   detailsBox.appendChild(bookText);
 
   specificDetailsText.appendChild(detailsBox);
+
+  //ONE_SET_OF_DETAILS
+  removeSpecificDetailsShown(specificDetailsText);
 };
 
 const removeSpecificDetailsShown = (specificDetailsText) => {
+  //removes all children of details exept last one
   while (
     currentMode === ONE_SET_OF_DETAILS &&
-    specificDetailsText.hasChildNodes()
+    specificDetailsText.children.length > 1
   ) {
     specificDetailsText.removeChild(specificDetailsText.firstChild);
   }

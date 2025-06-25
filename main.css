@@ -305,7 +305,7 @@ td {
   display: flex;
   flex-direction: column;
   width: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .specific_details_box {
