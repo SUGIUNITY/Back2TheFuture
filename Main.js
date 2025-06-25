@@ -137,12 +137,21 @@ const detailsAdderMode = (event) => {
     currentMode = ONE_SET_OF_DETAILS;
 
     clearCurrentlyClickedYoungsters();
+    const specificDetailsText = document.getElementById(
+      "specific_details_boxes_container"
+    );
+    removeSpecificDetailsShown(specificDetailsText);
     event.target.classList.remove("youngsters_details_adder_mode_active");
     event.target.textContent = "+";
   } else {
-    clearCurrentlyClickedYoungsters();
-
     currentMode = DETAILS_ADDER;
+
+    currentlyClickedYoungsters[0].classList.add(
+      "multiple_youngsters_clicked_mode"
+    );
+    currentlyClickedYoungsters[0].classList.remove(
+      "one_youngster_clicked_mode"
+    );
 
     event.target.classList.add("youngsters_details_adder_mode_active");
     event.target.textContent = "-";
@@ -157,8 +166,15 @@ const showSpecificDetailsOfYoungster = (event) => {
   const youngsterNumber = event.target.parentElement.children[0].textContent;
   const youngsterClicked = getYoungsterByNumber(youngsterNumber);
 
+  console.log(currentlyClickedYoungsters);
+  console.log(event.target.parentElement);
+
   //add specific details
-  addDetails(specifiedData, youngsterClicked);
+  if (!currentlyClickedYoungsters.includes(event.target.parentElement)) {
+    addDetails(specifiedData, youngsterClicked);
+  }
+
+  currentlyClickedYoungsters.push(event.target.parentElement);
 };
 
 const matchSettingsToCurrentMode = (event) => {
@@ -172,8 +188,6 @@ const matchSettingsToCurrentMode = (event) => {
         : "multiple_youngsters_clicked_mode"
     }`
   );
-
-  currentlyClickedYoungsters.push(event.target.parentElement);
 };
 
 const clearCurrentlyClickedYoungsters = () => {
@@ -204,12 +218,7 @@ const addDetails = (specifiedData, youngsterClicked) => {
   );
 
   //ONE_SET_OF_DETAILS
-  while (
-    currentMode === ONE_SET_OF_DETAILS &&
-    specificDetailsText.hasChildNodes()
-  ) {
-    specificDetailsText.removeChild(specificDetailsText.firstChild);
-  }
+  removeSpecificDetailsShown(specificDetailsText);
 
   //DETAILS_ADDER
   const detailsBox = document.createElement("div");
@@ -228,4 +237,13 @@ const addDetails = (specifiedData, youngsterClicked) => {
   detailsBox.appendChild(bookText);
 
   specificDetailsText.appendChild(detailsBox);
+};
+
+const removeSpecificDetailsShown = (specificDetailsText) => {
+  while (
+    currentMode === ONE_SET_OF_DETAILS &&
+    specificDetailsText.hasChildNodes()
+  ) {
+    specificDetailsText.removeChild(specificDetailsText.firstChild);
+  }
 };
