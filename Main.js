@@ -133,19 +133,19 @@ let currentMode = ONE_SET_OF_DETAILS;
 
 //specific details---------------------------------------------------------------
 const detailsAdderMode = (event) => {
-  if (currentMode === ONE_SET_OF_DETAILS) {
+  if (currentMode === DETAILS_ADDER) {
+    currentMode = ONE_SET_OF_DETAILS;
+
+    clearCurrentlyClickedYoungsters();
+    event.target.classList.remove("youngsters_details_adder_mode_active");
+    event.target.textContent = "+";
+  } else {
     clearCurrentlyClickedYoungsters();
 
     currentMode = DETAILS_ADDER;
 
     event.target.classList.add("youngsters_details_adder_mode_active");
     event.target.textContent = "-";
-  } else {
-    currentMode = ONE_SET_OF_DETAILS;
-
-    clearCurrentlyClickedYoungsters();
-    event.target.classList.remove("youngsters_details_adder_mode_active");
-    event.target.textContent = "+";
   }
 };
 
@@ -199,15 +199,33 @@ const getYoungsterByNumber = (youngsterNumber) => {
 };
 
 const addDetails = (specifiedData, youngsterClicked) => {
-  document.getElementById(
-    "specific_details_text_name"
-  ).textContent = `${specifiedData["שם הצעיר"]}: ${youngsterClicked["שם הצעיר"]}`;
+  const specificDetailsText = document.getElementById(
+    "specific_details_boxes_container"
+  );
 
-  document.getElementById(
-    "specific_details_text_hobby"
-  ).textContent = `${specifiedData["תחביב"]}: ${youngsterClicked["תחביב"]}`;
+  //ONE_SET_OF_DETAILS
+  while (
+    currentMode === ONE_SET_OF_DETAILS &&
+    specificDetailsText.hasChildNodes()
+  ) {
+    specificDetailsText.removeChild(specificDetailsText.firstChild);
+  }
 
-  document.getElementById(
-    "specific_details_text_book"
-  ).textContent = `${specifiedData["ספר"]}: ${youngsterClicked["ספר"]}`;
+  //DETAILS_ADDER
+  const detailsBox = document.createElement("div");
+  detailsBox.classList.add("specific_details_box");
+
+  const youngsterNameText = document.createElement("span");
+  youngsterNameText.textContent = `${specifiedData["שם הצעיר"]}: ${youngsterClicked["שם הצעיר"]}`;
+  detailsBox.appendChild(youngsterNameText);
+
+  const habbitText = document.createElement("span");
+  habbitText.textContent = `${specifiedData["תחביב"]}: ${youngsterClicked["תחביב"]}`;
+  detailsBox.appendChild(habbitText);
+
+  const bookText = document.createElement("span");
+  bookText.textContent = `${specifiedData["ספר"]}: ${youngsterClicked["ספר"]}`;
+  detailsBox.appendChild(bookText);
+
+  specificDetailsText.appendChild(detailsBox);
 };

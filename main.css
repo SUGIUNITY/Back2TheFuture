@@ -291,7 +291,7 @@ body {
   margin-top: 1%;
   margin-bottom: 2%;
   width: 85%;
-  height: 25%;
+  height: 18vmin;
   outline: 0.4vmin solid rgb(11, 116, 185);
   text-align: center;
   background-color: white;
@@ -301,11 +301,19 @@ td {
   padding-right: 1.5vmin;
 }
 
-#specific_details_text {
+#specific_details_boxes_container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow-y: scroll;
+}
+
+.specific_details_box {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  width: 100%;
+  width: inherit;
   font-size: 3vmin;
-  margin-top: 1%;
+  padding-top: 7vmin;
+  padding-bottom: 7vmin;
 }
