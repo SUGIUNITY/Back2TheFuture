@@ -263,9 +263,16 @@ body {
   background: #395ac5;
 }
 
-#all_details_data {
+#all_details_data_box {
   background-color: white;
   direction: rtl;
+}
+
+#all_details_table {
+  width: 100%;
+  text-align: start;
+  font-weight: 200;
+  text-wrap: nowrap;
 }
 
 .table_row {

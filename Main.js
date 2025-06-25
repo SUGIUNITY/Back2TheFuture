@@ -60,13 +60,7 @@ const showYoungsters = (event) => {
   const tableData = ["מספר הצעיר", "שם הצעיר", "מיקום מגורים", "טלפון"];
 
   if (youngsters.length > 0 && !tableShown) {
-    const mainBox = document.getElementById("all_details_data");
-    const table = document.createElement("table");
-
-    table.style.width = "100%";
-    table.style.textAlign = "start";
-    table.style.fontWeight = "200";
-    table.style.textWrap = "nowrap";
+    const table = document.getElementById("all_details_table");
 
     // table title
     createTableHeader(table, tableData);
@@ -74,7 +68,6 @@ const showYoungsters = (event) => {
     //table data
     addYoungstersToTable(table, tableData, youngsters);
 
-    mainBox.appendChild(table);
     tableShown = true;
   } else {
     console.log("youngsters is empty or currently shown");
