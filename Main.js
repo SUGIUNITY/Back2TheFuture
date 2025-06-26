@@ -2,6 +2,7 @@ import { youngsters } from "./data.js";
 
 document.addEventListener("DOMContentLoaded", (event) => {
   manageClock();
+  updateLastEnterTime();
   document.getElementById("start_clock").addEventListener("click", manageClock);
   document
     .getElementById("youngsters")
@@ -30,12 +31,10 @@ const focusButton = (event) => {
 };
 
 //clock---------------------------------------------------------------------
-let is_clock_running = false;
+let is_clock_running = true;
 let clockInterval = null;
 
 const manageClock = (event) => {
-  is_clock_running = !is_clock_running;
-
   if (is_clock_running) {
     startClock();
     clockInterval = setInterval(startClock, 1000);
@@ -44,6 +43,8 @@ const manageClock = (event) => {
     clearTimeout(clockInterval);
     document.getElementById("start_clock").textContent = "הפעל";
   }
+
+  is_clock_running = !is_clock_running;
 };
 
 const startClock = () => {
@@ -51,6 +52,16 @@ const startClock = () => {
     new Date().toLocaleTimeString("he-IL", {
       hour12: false,
     });
+};
+
+const updateLastEnterTime = () => {
+  document.getElementById(
+    "last_enter"
+  ).textContent = `הכניסה האחרונה שלך ${new Date().toLocaleTimeString("he-IL", {
+    hour: "numeric",
+    minute: "numeric",
+    hour12: false,
+  })}`;
 };
 
 //youngsters---------------------------------------------------------------
@@ -76,9 +87,8 @@ const showYoungsters = (event) => {
 
 const createTableHeader = (table, tableData) => {
   const tableHeader = table.createTHead();
+  tableHeader.classList.add("details_table_header");
   const tableTitle = tableHeader.insertRow();
-  tableHeader.style.top = 0;
-  tableHeader.style.position = "sticky";
 
   tableData.forEach((key) => {
     const tableTitleColumn = tableTitle.insertCell();
@@ -139,10 +149,10 @@ const detailsAdderMode = (event) => {
   } else {
     currentMode = DETAILS_ADDER;
 
-    currentlyClickedYoungsters[0].classList.add(
+    currentlyClickedYoungsters[0]?.classList.add(
       "multiple_youngsters_clicked_mode"
     );
-    currentlyClickedYoungsters[0].classList.remove(
+    currentlyClickedYoungsters[0]?.classList.remove(
       "one_youngster_clicked_mode"
     );
 
@@ -152,17 +162,23 @@ const detailsAdderMode = (event) => {
 };
 
 const showSpecificDetailsOfYoungster = (event) => {
-  if (!currentlyClickedYoungsters.includes(event.target.parentElement)) {
+  const specifiedData = { "שם הצעיר": "שם", תחביב: "תחביב", ספר: "ספר" };
+
+  const youngsterNumber = event.target.parentElement.children[0].textContent;
+  const youngsterClicked = getYoungsterByNumber(youngsterNumber);
+
+  if (currentlyClickedYoungsters.includes(event.target.parentElement)) {
+    //scroll to child
+    const detailsBox = document.getElementById(
+      `specific_details_youngster_${youngsterNumber}`
+    );
+
+    detailsBox.scrollIntoView();
+  } else {
     currentlyClickedYoungsters.push(event.target.parentElement);
 
     matchSettingsToCurrentMode(event);
 
-    const specifiedData = { "שם הצעיר": "שם", תחביב: "תחביב", ספר: "ספר" };
-
-    const youngsterNumber = event.target.parentElement.children[0].textContent;
-    const youngsterClicked = getYoungsterByNumber(youngsterNumber);
-
-    //add specific details
     addDetails(specifiedData, youngsterClicked);
   }
 };
@@ -211,6 +227,7 @@ const addDetails = (specifiedData, youngsterClicked) => {
 
   //DETAILS_ADDER
   const detailsBox = document.createElement("div");
+  detailsBox.id = `specific_details_youngster_${youngsterClicked["מספר הצעיר"]}`;
   detailsBox.classList.add("specific_details_box");
 
   const youngsterNameText = document.createElement("span");
@@ -226,6 +243,8 @@ const addDetails = (specifiedData, youngsterClicked) => {
   detailsBox.appendChild(bookText);
 
   specificDetailsText.appendChild(detailsBox);
+
+  detailsBox.scrollIntoView();
 
   //ONE_SET_OF_DETAILS
   removeSpecificDetailsShown(specificDetailsText);

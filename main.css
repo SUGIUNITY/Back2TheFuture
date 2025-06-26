@@ -100,6 +100,14 @@ body {
   text-wrap: nowrap;
 }
 
+#user {
+  font-size: 3vmin;
+}
+
+#last_enter {
+  font-size: 1.8vmin;
+}
+
 .bottom_page {
   display: flex;
   justify-content: space-between;
@@ -133,8 +141,8 @@ body {
     0 1vmin 1vmin rgba(0, 0, 0, 0.2), 1vmin 0 1vmin rgba(0, 0, 0, 0.2),
     -1vmin 0 1vmin rgba(0, 0, 0, 0.2);
   font-size: 3vmin;
-  width: 50%;
-  height: 9%;
+  width: 22vmin;
+  height: 7vmin;
   margin-bottom: 1vmin;
   color: white;
   border-radius: 1vmin;
@@ -269,10 +277,16 @@ body {
 }
 
 #all_details_table {
+  border-collapse: collapse;
   width: 100%;
   text-align: start;
   font-weight: 200;
   text-wrap: nowrap;
+}
+
+.details_table_header {
+  top: 0;
+  position: sticky;
 }
 
 .table_row {
@@ -305,22 +319,28 @@ body {
 }
 
 td {
+  border: 0.4vmin solid white;
+  padding: 0.5vmin;
   padding-right: 1.5vmin;
 }
 
 #specific_details_boxes_container {
+  direction: ltr;
   display: flex;
   flex-direction: column;
   width: 100%;
   overflow-y: auto;
+  margin-top: auto;
+  height: 80%;
 }
 
 .specific_details_box {
+  direction: rtl;
   display: flex;
   justify-content: space-around;
   align-items: center;
   width: inherit;
   font-size: 3vmin;
-  padding-top: 7vmin;
-  padding-bottom: 7vmin;
+  padding-top: 5vmin;
+  padding-bottom: 5vmin;
 }
