@@ -179,11 +179,21 @@ body {
   height: 100%;
 }
 
+#image_page {
+  width: inherit;
+  height: inherit;
+}
+
+#main_image {
+  height: 80vmin;
+  width: auto;
+}
+
 .hidden {
   display: none;
 }
 
-#youngsters_page {
+#table_page {
   width: inherit;
   height: inherit;
 }

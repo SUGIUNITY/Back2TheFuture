@@ -3,7 +3,7 @@ import { youngsters } from "./data.js";
 document.addEventListener("DOMContentLoaded", (event) => {
   manageClock();
   updateLastEnterTime();
-  document.getElementById("aliens").classList.add("button_focus");
+  focusButton({ target: sideButtons[0] });
   document.getElementById("start_clock").addEventListener("click", manageClock);
   document
     .getElementById("youngsters")
@@ -17,19 +17,49 @@ document.addEventListener("DOMContentLoaded", (event) => {
 });
 
 //button pressed---------------------------------------------------------------------
+const sideButtons = [...document.getElementsByClassName("side_button")];
+
+const imageDirectory = "./images";
+
+const buttonToPageType = {
+  aliens: "image",
+  youngsters: "table",
+  management: "image",
+  war: "image",
+  galactic_space: "image",
+};
+
+const imageButtonToImagePath = {
+  aliens: "aliens.png",
+  management: "management.png",
+  war: "war.png",
+  galactic_space: "galactic_space.png",
+};
+
+//TODO: needs to make localstorage
 let currentSidebarButtonPressed = null;
 
 const focusButton = (event) => {
-  if (currentSidebarButtonPressed) {
-    currentSidebarButtonPressed.classList.remove("button_focus");
-    document
-      .getElementById(`${currentSidebarButtonPressed.id}_page`)
-      .classList.add("hidden");
+  currentSidebarButtonPressed?.classList.remove("button_focus");
+
+  if (buttonToPageType[event.target.id] === "image") {
+    document.getElementById("image_page").classList.remove("hidden");
+    document.getElementById("table_page").classList.add("hidden");
+    deleteTable();
+
+    document.getElementById("main_image").src = `${imageDirectory}/${
+      imageButtonToImagePath[event.target.id]
+    }`;
+  } else {
+    document.getElementById("table_page").classList.remove("hidden");
+    document.getElementById("image_page").classList.add("hidden");
   }
 
   currentSidebarButtonPressed = event.target;
-  currentSidebarButtonPressed.classList.add("button_focus");
-  document.getElementById(`${event.target.id}_page`).classList.remove("hidden");
+};
+
+const deleteTable = () => {
+  document.getElementsByClassName("table_container")[0]?.remove();
 };
 
 //clock---------------------------------------------------------------------
@@ -67,12 +97,17 @@ const updateLastEnterTime = () => {
 };
 
 //youngsters---------------------------------------------------------------
-let tableShown = false;
-
 const showYoungsters = (event) => {
   const tableData = ["מספר הצעיר", "שם הצעיר", "מיקום מגורים", "טלפון"];
 
-  if (youngsters.length > 0 && !tableShown) {
+  const allDetailsDiv = document.getElementById("all_details");
+
+  if (
+    youngsters.length > 0 &&
+    document.getElementsByClassName("table_container")[0] === undefined
+  ) {
+    createTableBase(allDetailsDiv);
+
     const table = document.getElementById("all_details_table");
 
     // table title
@@ -80,11 +115,28 @@ const showYoungsters = (event) => {
 
     //table data
     addYoungstersToTable(table, tableData, youngsters);
-
-    tableShown = true;
   } else {
     console.log("youngsters is empty or currently shown");
   }
+};
+
+const createTableBase = (base) => {
+  const tableContainer = document.createElement("div");
+  tableContainer.classList.add("table_container");
+
+  const tableScroll = document.createElement("div");
+  tableScroll.classList.add("scroll");
+
+  const tableDetailsDataBox = document.createElement("div");
+  tableDetailsDataBox.id = "all_details_data_box";
+
+  const table = document.createElement("table");
+  table.id = "all_details_table";
+
+  tableDetailsDataBox.appendChild(table);
+  tableScroll.appendChild(tableDetailsDataBox);
+  tableContainer.appendChild(tableScroll);
+  base.appendChild(tableContainer);
 };
 
 const createTableHeader = (table, tableData) => {
