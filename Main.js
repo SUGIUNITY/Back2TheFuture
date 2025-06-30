@@ -3,6 +3,7 @@ import { youngsters } from "./data.js";
 document.addEventListener("DOMContentLoaded", (event) => {
   manageClock();
   updateLastEnterTime();
+  document.getElementById("aliens").classList.add("button_focus");
   document.getElementById("start_clock").addEventListener("click", manageClock);
   document
     .getElementById("youngsters")
@@ -25,6 +26,7 @@ const focusButton = (event) => {
       .getElementById(`${currentSidebarButtonPressed.id}_page`)
       .classList.add("hidden");
   }
+
   currentSidebarButtonPressed = event.target;
   currentSidebarButtonPressed.classList.add("button_focus");
   document.getElementById(`${event.target.id}_page`).classList.remove("hidden");
@@ -92,8 +94,7 @@ const createTableHeader = (table, tableData) => {
 
   tableData.forEach((key) => {
     const tableTitleColumn = tableTitle.insertCell();
-    tableTitleColumn.style.backgroundColor = "black";
-    tableTitleColumn.style.color = "white";
+    tableTitleColumn.classList.add("table_title_column");
 
     tableTitleColumn.appendChild(document.createTextNode(key));
   });
