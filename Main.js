@@ -145,11 +145,34 @@ const createTableHeader = (table, tableData) => {
   const tableTitle = tableHeader.insertRow();
 
   tableData.forEach((key) => {
-    const tableTitleColumn = tableTitle.insertCell();
-    tableTitleColumn.classList.add("table_title_column");
-
-    tableTitleColumn.appendChild(document.createTextNode(key));
+    createTableTitleColumn(tableTitle, key);
   });
+};
+
+const createTableTitleColumn = (tableTitle, key) => {
+  const tableTitleColumn = tableTitle.insertCell();
+  tableTitleColumn.classList.add("table_title_column");
+
+  const titleColumnBox = document.createElement("div");
+  titleColumnBox.classList.add("table_title_column_box");
+
+  const titleText = document.createTextNode(key);
+
+  const sortButtonsBox = document.createElement("div");
+  sortButtonsBox.classList.add("sort_buttons_box");
+
+  const arrowUp = document.createElement("div");
+  arrowUp.classList.add("arrow_up");
+  const arrowDown = document.createElement("div");
+  arrowDown.classList.add("arrow_down");
+
+  sortButtonsBox.appendChild(arrowUp);
+  sortButtonsBox.appendChild(arrowDown);
+
+  titleColumnBox.appendChild(titleText);
+  titleColumnBox.appendChild(sortButtonsBox);
+
+  tableTitleColumn.appendChild(titleColumnBox);
 };
 
 const addYoungstersToTable = (table, tableData, youngsters) => {
