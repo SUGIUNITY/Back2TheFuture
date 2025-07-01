@@ -301,22 +301,51 @@ body {
 }
 
 .arrow_up {
+  position: relative;
   width: 0;
   height: 0;
-  border-left: 2vmin solid transparent;
-  border-right: 2vmin solid transparent;
+  border-left: 1.4vmin solid transparent;
+  border-right: 1.4vmin solid transparent;
 
-  border-bottom: 3vmin solid rgb(20, 64, 137);
+  border-bottom: 1.8vmin solid rgb(150, 33, 33);
+  margin-bottom: 0.3vmin;
+}
+
+.arrow_up::after {
+  content: "";
+  position: absolute;
+  right: -0.935vmin;
+  top: 0.3vmin;
+  width: 0;
+  height: 0;
+  border-left: 0.9vmin solid transparent;
+  border-right: 0.9vmin solid transparent;
+
+  border-bottom: 1.4vmin solid rgb(20, 64, 137);
   margin-bottom: 0.3vmin;
 }
 
 .arrow_down {
+  position: relative;
   width: 0;
   height: 0;
-  border-left: 2vmin solid transparent;
-  border-right: 2vmin solid transparent;
+  border-left: 1.4vmin solid transparent;
+  border-right: 1.4vmin solid transparent;
 
-  border-top: 3vmin solid rgb(20, 64, 137);
+  border-top: 1.8vmin solid rgb(150, 33, 33);
+}
+
+.arrow_down::after {
+  content: "";
+  position: absolute;
+  right: -0.935vmin;
+  top: -1.6vmin;
+  width: 0;
+  height: 0;
+  border-left: 0.9vmin solid transparent;
+  border-right: 0.9vmin solid transparent;
+
+  border-top: 1.4vmin solid rgb(20, 64, 137);
 }
 
 .arrow_up:hover {
