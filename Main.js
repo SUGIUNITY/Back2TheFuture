@@ -249,6 +249,8 @@ const showSpecificDetailsOfYoungster = (event) => {
       );
     }
   }
+
+  specificDetailsText.scrollTop = 0;
 };
 
 const matchSettingsToCurrentMode = (currentlyClickedYoungsterElement) => {
