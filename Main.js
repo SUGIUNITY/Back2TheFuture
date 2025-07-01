@@ -167,18 +167,6 @@ const addYoungstersToTable = (table, tableData, youngsters) => {
         document.createTextNode(item[element] != undefined ? item[element] : "")
       );
     });
-    //   const youngstersValues = Object.values(item);
-
-    //   youngstersValues.forEach((value) => {
-    //     if (tableData.includes(value)) {
-    //       const tableColumn = tableRow.insertCell();
-    //       tableColumn.style.paddingRight = "1vw";
-    //       tableColumn.appendChild(document.createTextNode(value));
-    //     } else {
-    //       console.log(tableData);
-    //       console.log(value);
-    //     }
-    //   });
   });
 };
 
@@ -193,6 +181,7 @@ const detailsAdderMode = (event) => {
     currentMode = ONE_SET_OF_DETAILS;
 
     clearCurrentlyClickedYoungsters();
+
     const specificDetailsText = document.getElementById(
       "specific_details_boxes_container"
     );
@@ -217,32 +206,57 @@ const detailsAdderMode = (event) => {
 const showSpecificDetailsOfYoungster = (event) => {
   const specifiedData = { "שם הצעיר": "שם", תחביב: "תחביב", ספר: "ספר" };
 
-  const youngsterNumber = event.target.parentElement.children[0].textContent;
+  const specificDetailsText = document.getElementById(
+    "specific_details_boxes_container"
+  );
+
+  const currentlyClickedYoungsterElement = event.target.parentElement;
+
+  const youngsterNumber =
+    currentlyClickedYoungsterElement.children[0].textContent;
   const youngsterClicked = getYoungsterByNumber(youngsterNumber);
 
-  if (currentlyClickedYoungsters.includes(event.target.parentElement)) {
-    //scroll to child
-    const detailsBox = document.getElementById(
-      `specific_details_youngster_${youngsterNumber}`
-    );
+  if (!currentlyClickedYoungsters.includes(currentlyClickedYoungsterElement)) {
+    currentlyClickedYoungsters = [
+      currentlyClickedYoungsterElement,
+      ...currentlyClickedYoungsters,
+    ];
 
-    detailsBox.scrollIntoView();
+    matchSettingsToCurrentMode(currentlyClickedYoungsterElement);
+
+    addDetails(specifiedData, youngsterClicked, specificDetailsText);
   } else {
-    currentlyClickedYoungsters.push(event.target.parentElement);
+    const index = currentlyClickedYoungsters.indexOf(
+      currentlyClickedYoungsterElement
+    );
+    currentlyClickedYoungsters.splice(index, 1);
+    currentlyClickedYoungsters = [
+      currentlyClickedYoungsterElement,
+      ...currentlyClickedYoungsters,
+    ];
 
-    matchSettingsToCurrentMode(event);
+    if (specificDetailsText.children.length > 1) {
+      const childInSpecificDetailsBox = document.getElementById(
+        `specific_details_youngster_${youngsterNumber}`
+      );
 
-    addDetails(specifiedData, youngsterClicked);
+      console.log(childInSpecificDetailsBox);
+      console.log(specificDetailsText);
+      specificDetailsText.removeChild(childInSpecificDetailsBox);
+      specificDetailsText.insertBefore(
+        childInSpecificDetailsBox,
+        specificDetailsText.firstChild
+      );
+    }
   }
 };
 
-const matchSettingsToCurrentMode = (event) => {
+const matchSettingsToCurrentMode = (currentlyClickedYoungsterElement) => {
   if (currentMode !== DETAILS_ADDER) {
     clearCurrentlyClickedYoungsters();
   }
 
-  //adds to array
-  event.target.parentElement.classList.add(
+  currentlyClickedYoungsterElement.classList.add(
     `${
       currentMode === ONE_SET_OF_DETAILS
         ? "one_youngster_clicked_mode"
@@ -252,7 +266,7 @@ const matchSettingsToCurrentMode = (event) => {
 };
 
 const clearCurrentlyClickedYoungsters = () => {
-  //clears currently clicked youngsters exept last clicked
+  //clears currently clicked youngsters exept first clicked
   currentlyClickedYoungsters.forEach((youngster) => {
     youngster.classList.remove(
       "multiple_youngsters_clicked_mode",
@@ -260,9 +274,11 @@ const clearCurrentlyClickedYoungsters = () => {
     );
   });
 
-  currentlyClickedYoungsters = currentlyClickedYoungsters.slice(-1);
+  if (currentlyClickedYoungsters.length > 0) {
+    currentlyClickedYoungsters = currentlyClickedYoungsters.slice(0, 1);
 
-  currentlyClickedYoungsters[0]?.classList.add("one_youngster_clicked_mode");
+    currentlyClickedYoungsters[0].classList.add("one_youngster_clicked_mode");
+  }
 };
 
 const getYoungsterByNumber = (youngsterNumber) => {
@@ -273,11 +289,7 @@ const getYoungsterByNumber = (youngsterNumber) => {
   }
 };
 
-const addDetails = (specifiedData, youngsterClicked) => {
-  const specificDetailsText = document.getElementById(
-    "specific_details_boxes_container"
-  );
-
+const addDetails = (specifiedData, youngsterClicked, specificDetailsText) => {
   //DETAILS_ADDER
   const detailsBox = document.createElement("div");
   detailsBox.id = `specific_details_youngster_${youngsterClicked["מספר הצעיר"]}`;
@@ -295,20 +307,30 @@ const addDetails = (specifiedData, youngsterClicked) => {
   bookText.textContent = `${specifiedData["ספר"]}: ${youngsterClicked["ספר"]}`;
   detailsBox.appendChild(bookText);
 
-  specificDetailsText.appendChild(detailsBox);
-
-  detailsBox.scrollIntoView();
+  specificDetailsText.insertBefore(detailsBox, specificDetailsText.firstChild);
 
   //ONE_SET_OF_DETAILS
-  removeSpecificDetailsShown(specificDetailsText);
+  if (currentMode === ONE_SET_OF_DETAILS) {
+    removeSpecificDetailsShown(specificDetailsText);
+  }
 };
 
 const removeSpecificDetailsShown = (specificDetailsText) => {
-  //removes all children of details exept last one
-  while (
-    currentMode === ONE_SET_OF_DETAILS &&
-    specificDetailsText.children.length > 1
-  ) {
-    specificDetailsText.removeChild(specificDetailsText.firstChild);
-  }
+  //removes all children of details exept first one
+  let children = [...specificDetailsText.children];
+
+  console.log(children);
+
+  children = children.slice(1, children.length);
+
+  children.forEach((child) => {
+    specificDetailsText.removeChild(child);
+  });
+
+  // while (
+  //   currentMode === ONE_SET_OF_DETAILS &&
+  //   specificDetailsText.children.length > 1
+  // ) {
+  //   specificDetailsText.removeChild(specificDetailsText.firstChild);
+  // }
 };
