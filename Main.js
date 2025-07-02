@@ -235,6 +235,14 @@ const showSpecificDetailsOfYoungster = (event) => {
 
   const currentlyClickedYoungsterElement = event.target.parentElement;
 
+  //scroll to child
+  const scrollDiv = document.getElementsByClassName("scroll")[0];
+
+  scrollDiv.scrollTo({
+    top: currentlyClickedYoungsterElement.offsetTop - scrollDiv.offsetTop,
+    behavior: "smooth",
+  });
+
   const youngsterNumber =
     currentlyClickedYoungsterElement.children[0].textContent;
   const youngsterClicked = getYoungsterByNumber(youngsterNumber);
@@ -263,9 +271,6 @@ const showSpecificDetailsOfYoungster = (event) => {
         `specific_details_youngster_${youngsterNumber}`
       );
 
-      console.log(childInSpecificDetailsBox);
-      console.log(specificDetailsText);
-      specificDetailsText.removeChild(childInSpecificDetailsBox);
       specificDetailsText.insertBefore(
         childInSpecificDetailsBox,
         specificDetailsText.firstChild

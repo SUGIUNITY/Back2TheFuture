@@ -263,6 +263,7 @@ body {
   width: inherit;
   height: 40vmin;
   direction: ltr;
+  scroll-behavior: smooth;
 }
 
 .scroll::-webkit-scrollbar {
