@@ -56,6 +56,7 @@ const focusButton = (event) => {
   }
 
   currentSidebarButtonPressed = event.target;
+  currentSidebarButtonPressed.classList.add("button_focus");
 };
 
 const deleteTable = () => {
