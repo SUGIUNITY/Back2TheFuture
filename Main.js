@@ -206,6 +206,8 @@ const detailsAdderMode = (event) => {
 
     clearCurrentlyClickedYoungsters();
 
+    scrollToTableRow(currentlyClickedYoungsters[0]);
+
     const specificDetailsText = document.getElementById(
       "specific_details_boxes_container"
     );
@@ -237,12 +239,7 @@ const showSpecificDetailsOfYoungster = (event) => {
   const currentlyClickedYoungsterElement = event.target.parentElement;
 
   //scroll to child
-  const scrollDiv = document.getElementsByClassName("scroll")[0];
-
-  scrollDiv.scrollTo({
-    top: currentlyClickedYoungsterElement.offsetTop - scrollDiv.offsetTop,
-    behavior: "smooth",
-  });
+  scrollToTableRow(currentlyClickedYoungsterElement);
 
   const youngsterNumber =
     currentlyClickedYoungsterElement.children[0].textContent;
@@ -280,6 +277,15 @@ const showSpecificDetailsOfYoungster = (event) => {
   }
 
   specificDetailsText.scrollTop = 0;
+};
+
+const scrollToTableRow = (currentlyClickedYoungsterElement) => {
+  const scrollDiv = document.getElementsByClassName("scroll")[0];
+
+  scrollDiv.scrollTo({
+    top: currentlyClickedYoungsterElement.offsetTop - scrollDiv.offsetTop,
+    behavior: "smooth",
+  });
 };
 
 const matchSettingsToCurrentMode = (currentlyClickedYoungsterElement) => {
