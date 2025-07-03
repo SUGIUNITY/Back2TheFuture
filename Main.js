@@ -45,7 +45,6 @@ const focusButton = (event) => {
   if (buttonToPageType[event.target.id] === "image") {
     document.getElementById("image_page").classList.remove("hidden");
     document.getElementById("table_page").classList.add("hidden");
-    deleteTable();
 
     document.getElementById("main_image").src = `${imageDirectory}/${
       imageButtonToImagePath[event.target.id]
@@ -57,10 +56,6 @@ const focusButton = (event) => {
 
   currentSidebarButtonPressed = event.target;
   currentSidebarButtonPressed.classList.add("button_focus");
-};
-
-const deleteTable = () => {
-  document.getElementsByClassName("table_container")[0]?.remove();
 };
 
 //clock---------------------------------------------------------------------
@@ -145,35 +140,42 @@ const createTableHeader = (table, tableData) => {
   tableHeader.classList.add("details_table_header");
   const tableTitle = tableHeader.insertRow();
 
-  tableData.forEach((key) => {
-    createTableTitleColumn(tableTitle, key);
-  });
+  for (let index = 0; index < tableData.length; index++) {
+    createTableTitleColumn(tableTitle, tableData, index);
+  }
 };
 
-const createTableTitleColumn = (tableTitle, key) => {
+const createTableTitleColumn = (tableTitle, tableData, index) => {
   const tableTitleColumn = tableTitle.insertCell();
   tableTitleColumn.classList.add("table_title_column");
+  tableTitleColumn.id = `youngsters_column_${index}`;
 
   const titleColumnBox = document.createElement("div");
   titleColumnBox.classList.add("table_title_column_box");
 
-  const titleText = document.createTextNode(key);
+  const titleText = document.createTextNode(tableData[index]);
 
   const sortButtonsBox = document.createElement("div");
   sortButtonsBox.classList.add("sort_buttons_box");
 
-  const arrowUp = document.createElement("div");
-  arrowUp.classList.add("arrow_up");
-  const arrowDown = document.createElement("div");
-  arrowDown.classList.add("arrow_down");
-
-  sortButtonsBox.appendChild(arrowUp);
-  sortButtonsBox.appendChild(arrowDown);
+  addSortingButtons(sortButtonsBox);
 
   titleColumnBox.appendChild(titleText);
   titleColumnBox.appendChild(sortButtonsBox);
 
   tableTitleColumn.appendChild(titleColumnBox);
+};
+
+const addSortingButtons = (sortButtonsBox) => {
+  const arrowUp = document.createElement("div");
+  arrowUp.classList.add("arrow_up");
+  arrowUp.addEventListener("click", sortTableByButton);
+  const arrowDown = document.createElement("div");
+  arrowDown.classList.add("arrow_down");
+  arrowDown.addEventListener("click", sortTableByButton);
+
+  sortButtonsBox.appendChild(arrowUp);
+  sortButtonsBox.appendChild(arrowDown);
 };
 
 const addYoungstersToTable = (table, tableData, youngsters) => {
@@ -194,9 +196,49 @@ const addYoungstersToTable = (table, tableData, youngsters) => {
   });
 };
 
+const sortTableByButton = (event) => {
+  const arrow = event.target;
+
+  const tableColumnTitle = arrow.parentElement.parentElement.parentElement.id;
+  const columnToSortBy = tableColumnTitle.charAt(tableColumnTitle.length - 1);
+
+  const tableBody = document.getElementById("all_details_table").children[1];
+
+  let tableRows = [...tableBody.children];
+
+  const arrowType = arrow.classList.contains("arrow_up") ? -1 : 1;
+
+  tableRows
+    .sort(compareTableRows(columnToSortBy, arrowType))
+    .forEach((row) => tableBody.appendChild(row));
+};
+
+const compareTableRows = (columnNumber, arrowType) => (current, next) => {
+  let currentValue = current.children[columnNumber].textContent;
+  let nextValue = next.children[columnNumber].textContent;
+
+  currentValue = Number.isNaN(parseInt(currentValue))
+    ? currentValue
+    : parseInt(currentValue);
+
+  nextValue = Number.isNaN(parseInt(nextValue))
+    ? nextValue
+    : parseInt(nextValue);
+
+  if (nextValue > currentValue) {
+    return arrowType;
+  } else if (currentValue > nextValue) {
+    return -arrowType;
+  }
+
+  return 0;
+};
+
 let currentlyClickedYoungsters = [];
 const ONE_SET_OF_DETAILS = 1;
 const DETAILS_ADDER = 2;
+
+//TODO: add to local storage
 let currentMode = ONE_SET_OF_DETAILS;
 
 //specific details---------------------------------------------------------------
