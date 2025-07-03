@@ -32,6 +32,7 @@ body {
   height: inherit;
   display: flex;
   margin-right: 1.5vmin;
+  width: 40%;
 }
 
 .title_img {

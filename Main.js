@@ -201,7 +201,7 @@ const sortTableByButton = (event) => {
 
   const tableBody = document.getElementById("all_details_table").children[1];
 
-  let tableRows = [...tableBody.children];
+  const tableRows = [...tableBody.children];
 
   const arrowType = arrow.classList.contains("arrow_up") ? -1 : 1;
 
