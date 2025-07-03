@@ -208,6 +208,8 @@ const sortTableByButton = (event) => {
   tableRows
     .sort(compareTableRows(columnToSortBy, arrowType))
     .forEach((row) => tableBody.appendChild(row));
+
+  scrollToTableRow(currentlyClickedYoungsters[0]);
 };
 
 const compareTableRows = (columnNumber, arrowType) => (current, next) => {
