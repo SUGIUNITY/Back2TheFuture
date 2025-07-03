@@ -261,30 +261,32 @@ body {
   width: inherit;
   height: 40vmin;
   direction: ltr;
-  scroll-behavior: smooth;
 }
 
-.scroll::-webkit-scrollbar {
+#all_details_data_box::-webkit-scrollbar {
   width: 2vmin;
 }
 
-.scroll::-webkit-scrollbar-track {
+#all_details_data_box::-webkit-scrollbar-track {
   box-shadow: inset 0 0 1.5vmin grey;
   border-radius: 2.5vmin;
 }
 
-.scroll::-webkit-scrollbar-thumb {
+#all_details_data_box::-webkit-scrollbar-thumb {
   background: #506dceb8;
   border-radius: 2.5vmin;
 }
 
-.scroll::-webkit-scrollbar-thumb:hover {
+#all_details_data_box::-webkit-scrollbar-thumb:hover {
   background: #395ac5;
 }
 
 #all_details_data_box {
   background-color: white;
-  direction: rtl;
+  overflow-y: auto;
+  width: inherit;
+  height: 40vmin;
+  direction: ltr;
 }
 
 .table_title_column_box {
@@ -361,6 +363,7 @@ body {
   font-weight: 200;
   text-wrap: nowrap;
   border-spacing: 0.4vmin;
+  direction: rtl;
 }
 
 .details_table_header {

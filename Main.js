@@ -120,9 +120,6 @@ const createTableBase = (base) => {
   const tableContainer = document.createElement("div");
   tableContainer.classList.add("table_container");
 
-  const tableScroll = document.createElement("div");
-  tableScroll.classList.add("scroll");
-
   const tableDetailsDataBox = document.createElement("div");
   tableDetailsDataBox.id = "all_details_data_box";
 
@@ -130,8 +127,8 @@ const createTableBase = (base) => {
   table.id = "all_details_table";
 
   tableDetailsDataBox.appendChild(table);
-  tableScroll.appendChild(tableDetailsDataBox);
-  tableContainer.appendChild(tableScroll);
+  tableContainer.appendChild(tableDetailsDataBox);
+
   base.appendChild(tableContainer);
 };
 
@@ -397,8 +394,6 @@ const addDetails = (specifiedData, youngsterClicked, specificDetailsText) => {
 const removeSpecificDetailsShown = (specificDetailsText) => {
   //removes all children of details exept first one
   let children = [...specificDetailsText.children];
-
-  console.log(children);
 
   children = children.slice(1, children.length);
 
