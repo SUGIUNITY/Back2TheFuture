@@ -319,10 +319,10 @@ const showSpecificDetailsOfYoungster = (event) => {
 };
 
 const scrollToTableRow = (currentlyClickedYoungsterElement) => {
-  const scrollDiv = document.getElementsByClassName("scroll")[0];
+  const dataBox = document.getElementById("all_details_data_box");
 
-  scrollDiv.scrollTo({
-    top: currentlyClickedYoungsterElement.offsetTop - scrollDiv.offsetTop,
+  dataBox.scrollTo({
+    top: currentlyClickedYoungsterElement.offsetTop - dataBox.offsetTop,
     behavior: "smooth",
   });
 };
