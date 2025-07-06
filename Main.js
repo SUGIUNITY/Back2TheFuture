@@ -373,17 +373,12 @@ const addDetails = (specifiedData, youngsterClicked, specificDetailsText) => {
   detailsBox.id = `specific_details_youngster_${youngsterClicked["מספר הצעיר"]}`;
   detailsBox.classList.add("specific_details_box");
 
-  const youngsterNameText = document.createElement("span");
-  youngsterNameText.textContent = `${specifiedData["שם הצעיר"]}: ${youngsterClicked["שם הצעיר"]}`;
-  detailsBox.appendChild(youngsterNameText);
-
-  const habbitText = document.createElement("span");
-  habbitText.textContent = `${specifiedData["תחביב"]}: ${youngsterClicked["תחביב"]}`;
-  detailsBox.appendChild(habbitText);
-
-  const bookText = document.createElement("span");
-  bookText.textContent = `${specifiedData["ספר"]}: ${youngsterClicked["ספר"]}`;
-  detailsBox.appendChild(bookText);
+  Object.keys(specifiedData).forEach((key) => {
+    const attribute = document.createElement("span");
+    attribute.textContent = `${specifiedData[key]}: ${youngsterClicked[key]}`;
+    attribute.classList.add("specific_details_text");
+    detailsBox.appendChild(attribute);
+  });
 
   specificDetailsText.insertBefore(detailsBox, specificDetailsText.firstChild);
 

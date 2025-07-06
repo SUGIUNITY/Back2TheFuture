@@ -431,3 +431,10 @@ td {
   padding-top: 5vmin;
   padding-bottom: 5vmin;
 }
+
+.specific_details_text {
+  max-width: 30%;
+  text-overflow: ellipsis;
+  text-wrap: nowrap;
+  overflow: hidden;
+}
