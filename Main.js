@@ -295,29 +295,26 @@ const showSpecificDetailsOfYoungster = (event) => {
     matchSettingsToCurrentMode(currentlyClickedYoungsterElement);
 
     addDetails(specifiedData, youngsterClicked, specificDetailsText);
+
+    specificDetailsText.scrollTop = 0;
   } else {
     const index = currentlyClickedYoungsters.indexOf(
       currentlyClickedYoungsterElement
     );
+
+    currentlyClickedYoungsterElement.classList.remove(
+      "multiple_youngsters_clicked_mode",
+      "one_youngster_clicked_mode"
+    );
+
     currentlyClickedYoungsters.splice(index, 1);
-    currentlyClickedYoungsters = [
-      currentlyClickedYoungsterElement,
-      ...currentlyClickedYoungsters,
-    ];
 
-    if (specificDetailsText.children.length > 1) {
-      const childInSpecificDetailsBox = document.getElementById(
-        `specific_details_youngster_${youngsterNumber}`
-      );
+    const specificDetailsToRemove = document.getElementById(
+      `specific_details_youngster_${youngsterClicked["מספר הצעיר"]}`
+    );
 
-      specificDetailsText.insertBefore(
-        childInSpecificDetailsBox,
-        specificDetailsText.firstChild
-      );
-    }
+    specificDetailsText.removeChild(specificDetailsToRemove);
   }
-
-  specificDetailsText.scrollTop = 0;
 };
 
 const scrollToTableRow = (currentlyClickedYoungsterElement) => {
