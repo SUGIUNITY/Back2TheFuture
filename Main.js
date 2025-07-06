@@ -374,10 +374,15 @@ const addDetails = (specifiedData, youngsterClicked, specificDetailsText) => {
   detailsBox.classList.add("specific_details_box");
 
   Object.keys(specifiedData).forEach((key) => {
-    const attribute = document.createElement("span");
+    const attributeBox = document.createElement("div");
+    const attribute = document.createElement("div");
+    attributeBox.classList.add("specific_details_text_box");
     attribute.textContent = `${specifiedData[key]}: ${youngsterClicked[key]}`;
     attribute.classList.add("specific_details_text");
-    detailsBox.appendChild(attribute);
+    attributeBox.appendChild(attribute);
+    attributeBox.addEventListener("mouseenter", createSpecificDetailsToolTip);
+    attributeBox.addEventListener("mouseleave", removeSpecificDetailsToolTip);
+    detailsBox.appendChild(attributeBox);
   });
 
   specificDetailsText.insertBefore(detailsBox, specificDetailsText.firstChild);
@@ -404,4 +409,15 @@ const removeSpecificDetailsShown = (specificDetailsText) => {
   // ) {
   //   specificDetailsText.removeChild(specificDetailsText.firstChild);
   // }
+};
+
+const createSpecificDetailsToolTip = (event) => {
+  const toolTip = document.createElement("span");
+  toolTip.textContent = event.target.textContent;
+  toolTip.id = "tooltip";
+  event.target.appendChild(toolTip);
+};
+
+const removeSpecificDetailsToolTip = (event) => {
+  document.getElementById("tooltip").remove();
 };

@@ -432,9 +432,42 @@ td {
   padding-bottom: 5vmin;
 }
 
-.specific_details_text {
+.specific_details_text_box {
+  position: relative;
   max-width: 30%;
+}
+
+.specific_details_text {
   text-overflow: ellipsis;
   text-wrap: nowrap;
-  overflow: hidden;
+  overflow-x: hidden;
+}
+
+#tooltip {
+  direction: ltr;
+  width: max-content;
+  text-align: center;
+  max-width: 100%;
+  position: absolute;
+  left: 50%;
+  bottom: 100%;
+  margin-bottom: 0.5vmin;
+  padding: 1vmin;
+  background-color: #244eb3;
+  color: white;
+  font-size: 1.8vmin;
+  line-height: 2vmin;
+  transform: translate(-50%, 0);
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border: 0.5em solid transparent;
+    border-top-color: #244eb3;
+    transform: translate(-50%, 0);
+  }
 }
