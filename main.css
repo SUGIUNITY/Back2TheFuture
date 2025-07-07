@@ -193,6 +193,10 @@ body {
 }
 
 #table_page {
+  flex-direction: column;
+  justify-content: center;
+  display: flex;
+
   width: inherit;
   height: inherit;
 }
@@ -407,6 +411,7 @@ body {
 }
 
 td {
+  white-space: break-spaces;
   padding: 0.5vmin;
   padding-right: 1.5vmin;
 }
