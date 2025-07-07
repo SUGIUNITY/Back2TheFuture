@@ -370,6 +370,8 @@ const addDetails = (specifiedData, youngsterClicked, specificDetailsText) => {
   detailsBox.id = `specific_details_youngster_${youngsterClicked["מספר הצעיר"]}`;
   detailsBox.classList.add("specific_details_box");
 
+  specificDetailsText.insertBefore(detailsBox, specificDetailsText.firstChild);
+
   Object.keys(specifiedData).forEach((key) => {
     const attributeBox = document.createElement("div");
     const attribute = document.createElement("div");
@@ -377,12 +379,20 @@ const addDetails = (specifiedData, youngsterClicked, specificDetailsText) => {
     attribute.textContent = `${specifiedData[key]}: ${youngsterClicked[key]}`;
     attribute.classList.add("specific_details_text");
     attributeBox.appendChild(attribute);
-    attributeBox.addEventListener("mouseenter", createSpecificDetailsToolTip);
-    attributeBox.addEventListener("mouseleave", removeSpecificDetailsToolTip);
+
     detailsBox.appendChild(attributeBox);
+
+    if (attribute.offsetWidth < attribute.scrollWidth) {
+      attributeBox.addEventListener("mouseenter", createSpecificDetailsToolTip);
+      attributeBox.addEventListener("mouseleave", removeSpecificDetailsToolTip);
+    }
   });
 
-  specificDetailsText.insertBefore(detailsBox, specificDetailsText.firstChild);
+  // console.log(
+  //   document
+  //     .getElementsByClassName("specific_details_text")[0]
+  //     .getBoundingClientRect()
+  // );
 
   //ONE_SET_OF_DETAILS
   if (currentMode === ONE_SET_OF_DETAILS) {
