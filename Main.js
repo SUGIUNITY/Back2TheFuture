@@ -3,7 +3,7 @@ import { youngsters } from "./data.js";
 document.addEventListener("DOMContentLoaded", (event) => {
   manageClock();
   updateLastEnterTime();
-  focusButton({ target: sideButtons[0] });
+
   document.getElementById("start_clock").addEventListener("click", manageClock);
   document
     .getElementById("youngsters")
@@ -14,6 +14,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
   document
     .getElementById("youngsters_details_adder_mode")
     .addEventListener("click", detailsAdderMode);
+
+  lastFocusedButton().click();
 });
 
 //button pressed---------------------------------------------------------------------
@@ -36,10 +38,19 @@ const imageButtonToImagePath = {
   galactic_space: "galactic_space.png",
 };
 
-//TODO: needs to make localstorage
-let currentSidebarButtonPressed = null;
+const lastFocusedButton = () => {
+  return localStorage.getItem("currentSidebarButtonPressed") === undefined
+    ? sideButtons[0]
+    : document.getElementById(
+        localStorage.getItem("currentSidebarButtonPressed")
+      );
+};
 
 const focusButton = (event) => {
+  const currentSidebarButtonPressed = document.getElementById(
+    localStorage.getItem("currentSidebarButtonPressed")
+  );
+
   currentSidebarButtonPressed?.classList.remove("button_focus");
 
   if (buttonToPageType[event.target.id] === "image") {
@@ -54,8 +65,8 @@ const focusButton = (event) => {
     document.getElementById("image_page").classList.add("hidden");
   }
 
-  currentSidebarButtonPressed = event.target;
-  currentSidebarButtonPressed.classList.add("button_focus");
+  event.target.classList.add("button_focus");
+  localStorage.setItem("currentSidebarButtonPressed", event.target.id);
 };
 
 //clock---------------------------------------------------------------------
