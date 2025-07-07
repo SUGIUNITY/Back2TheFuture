@@ -73,10 +73,9 @@ body {
   width: 12vmin;
   box-shadow: 0 0.6vmin 1vmin rgba(0, 0, 0, 0.5);
   background-image: linear-gradient(white, rgb(88, 88, 88));
-  margin-left: 0.7vmin;
   border-width: 0.3vmin;
   padding-inline: 1.5vmin;
-  margin-left: 1vmin;
+  margin-left: 1.5vmin;
 }
 
 .clock_box {
@@ -227,7 +226,7 @@ body {
   width: 12vmin;
   height: 5vmin;
   left: 2vmin;
-  top: 0.5vmin;
+  top: 1vmin;
   background-color: #395ac5;
   outline: 0.3vmin solid black;
   color: white;
