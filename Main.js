@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
     .addEventListener("click", detailsAdderMode);
 
   lastFocusedButton().click();
+  setLastMode();
 });
 
 //button pressed---------------------------------------------------------------------
@@ -39,7 +40,7 @@ const imageButtonToImagePath = {
 };
 
 const lastFocusedButton = () => {
-  return localStorage.getItem("currentSidebarButtonPressed") === undefined
+  return localStorage.getItem("currentSidebarButtonPressed") === null
     ? sideButtons[0]
     : document.getElementById(
         localStorage.getItem("currentSidebarButtonPressed")
@@ -248,14 +249,23 @@ let currentlyClickedYoungsters = [];
 const ONE_SET_OF_DETAILS = 1;
 const DETAILS_ADDER = 2;
 
-//TODO: add to local storage
-let currentMode = ONE_SET_OF_DETAILS;
-
 //specific details---------------------------------------------------------------
-const detailsAdderMode = (event) => {
-  if (currentMode === DETAILS_ADDER) {
-    currentMode = ONE_SET_OF_DETAILS;
+const setLastMode = () => {
+  const currentMode = JSON.parse(localStorage.getItem("currentMode"));
+  if (currentMode === null) {
+    localStorage.setItem("currentMode", ONE_SET_OF_DETAILS);
+  }
+};
 
+const detailsAdderMode = (event) => {
+  let currentMode = JSON.parse(localStorage.getItem("currentMode"));
+
+  currentMode =
+    currentMode === DETAILS_ADDER ? ONE_SET_OF_DETAILS : DETAILS_ADDER;
+
+  localStorage.setItem("currentMode", currentMode);
+
+  if (currentMode === ONE_SET_OF_DETAILS) {
     clearCurrentlyClickedYoungsters();
 
     scrollToTableRow(currentlyClickedYoungsters[0]);
@@ -267,8 +277,6 @@ const detailsAdderMode = (event) => {
     event.target.classList.remove("youngsters_details_adder_mode_active");
     event.target.textContent = "+";
   } else {
-    currentMode = DETAILS_ADDER;
-
     currentlyClickedYoungsters[0]?.classList.add(
       "multiple_youngsters_clicked_mode"
     );
@@ -303,9 +311,16 @@ const showSpecificDetailsOfYoungster = (event) => {
       ...currentlyClickedYoungsters,
     ];
 
-    matchSettingsToCurrentMode(currentlyClickedYoungsterElement);
+    const currentMode = JSON.parse(localStorage.getItem("currentMode"));
 
-    addDetails(specifiedData, youngsterClicked, specificDetailsText);
+    matchSettingsToCurrentMode(currentlyClickedYoungsterElement, currentMode);
+
+    addDetails(
+      specifiedData,
+      youngsterClicked,
+      specificDetailsText,
+      currentMode
+    );
 
     specificDetailsText.scrollTop = 0;
   } else {
@@ -337,7 +352,10 @@ const scrollToTableRow = (currentlyClickedYoungsterElement) => {
   });
 };
 
-const matchSettingsToCurrentMode = (currentlyClickedYoungsterElement) => {
+const matchSettingsToCurrentMode = (
+  currentlyClickedYoungsterElement,
+  currentMode
+) => {
   if (currentMode !== DETAILS_ADDER) {
     clearCurrentlyClickedYoungsters();
   }
@@ -375,7 +393,12 @@ const getYoungsterByNumber = (youngsterNumber) => {
   }
 };
 
-const addDetails = (specifiedData, youngsterClicked, specificDetailsText) => {
+const addDetails = (
+  specifiedData,
+  youngsterClicked,
+  specificDetailsText,
+  currentMode
+) => {
   //DETAILS_ADDER
   const detailsBox = document.createElement("div");
   detailsBox.id = `specific_details_youngster_${youngsterClicked["מספר הצעיר"]}`;
