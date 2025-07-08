@@ -16,8 +16,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
     .addEventListener("click", changeMode);
 
   lastFocusedButton().click();
-  setLastMode();
-  setCurrentlyClickedYoungstersArray();
 });
 
 //button pressed---------------------------------------------------------------------
@@ -124,6 +122,9 @@ const showYoungsters = (event) => {
 
     //table data
     addYoungstersToTable(table, tableData, youngsters);
+
+    setLastMode();
+    setCurrentlyClickedYoungstersArray();
   } else {
     console.log("youngsters is empty or currently shown");
   }
@@ -265,7 +266,7 @@ const setCurrentlyClickedYoungstersArray = () => {
   if (currentlyClickedYoungsters !== null) {
     currentlyClickedYoungsters.reverse();
     currentlyClickedYoungsters.forEach((youngsterId) => {
-      console.log(currentlyClickedYoungsters);
+      console.log(youngsterId);
       document.getElementById(youngsterId).firstChild.click();
     });
   }
@@ -302,27 +303,31 @@ const changeMode = (event) => {
     localStorage.getItem("currentlyClickedYoungsters")
   );
 
-  const lastClickedYoungster = document.getElementById(
-    currentlyClickedYoungsters[0]
-  );
-
-  if (currentMode === ONE_SET_OF_DETAILS) {
-    clearCurrentlyClickedYoungsters(currentlyClickedYoungsters);
-
-    scrollToTableRow(lastClickedYoungster);
-
-    const specificDetailsText = document.getElementById(
-      "specific_details_boxes_container"
+  if (currentlyClickedYoungsters !== null) {
+    const lastClickedYoungster = document.getElementById(
+      currentlyClickedYoungsters[0]
     );
-    removeSpecificDetailsShown(specificDetailsText);
-    event.target.classList.remove("youngsters_details_adder_mode_active");
-    event.target.textContent = "+";
-  } else {
-    lastClickedYoungster?.classList.add("multiple_youngsters_clicked_mode");
-    lastClickedYoungster?.classList.remove("one_youngster_clicked_mode");
 
-    event.target.classList.add("youngsters_details_adder_mode_active");
-    event.target.textContent = "-";
+    if (currentMode === ONE_SET_OF_DETAILS) {
+      clearCurrentlyClickedYoungsters(currentlyClickedYoungsters);
+
+      if (lastClickedYoungster) {
+        scrollToTableRow(lastClickedYoungster);
+      }
+
+      const specificDetailsText = document.getElementById(
+        "specific_details_boxes_container"
+      );
+      removeSpecificDetailsShown(specificDetailsText);
+      event.target.classList.remove("youngsters_details_adder_mode_active");
+      event.target.textContent = "+";
+    } else {
+      lastClickedYoungster?.classList.add("multiple_youngsters_clicked_mode");
+      lastClickedYoungster?.classList.remove("one_youngster_clicked_mode");
+
+      event.target.classList.add("youngsters_details_adder_mode_active");
+      event.target.textContent = "-";
+    }
   }
 };
 
@@ -345,10 +350,6 @@ const showSpecificDetailsOfYoungster = (event) => {
   let currentlyClickedYoungsters = JSON.parse(
     localStorage.getItem("currentlyClickedYoungsters")
   );
-
-  console.log(currentlyClickedYoungsters);
-
-  console.log(currentlyClickedYoungsterElement.id);
 
   if (
     !currentlyClickedYoungsters.includes(currentlyClickedYoungsterElement.id)
