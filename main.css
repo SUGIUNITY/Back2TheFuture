@@ -192,15 +192,13 @@ body {
 }
 
 #table_page {
-  flex-direction: column;
-  justify-content: center;
-  display: flex;
-
   width: inherit;
   height: inherit;
 }
 
 #youngsters_full_details {
+  width: inherit;
+  height: inherit;
   display: flex;
   flex-direction: column;
   justify-content: center;

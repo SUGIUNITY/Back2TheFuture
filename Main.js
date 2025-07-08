@@ -13,10 +13,11 @@ document.addEventListener("DOMContentLoaded", (event) => {
   });
   document
     .getElementById("youngsters_details_adder_mode")
-    .addEventListener("click", detailsAdderMode);
+    .addEventListener("click", changeMode);
 
   lastFocusedButton().click();
   setLastMode();
+  setCurrentlyClickedYoungstersArray();
 });
 
 //button pressed---------------------------------------------------------------------
@@ -195,6 +196,7 @@ const addYoungstersToTable = (table, tableData, youngsters) => {
     tableRow.classList.add("table_row");
     tableRow.setAttribute("tabindex", "0");
     tableRow.addEventListener("click", showSpecificDetailsOfYoungster);
+    tableRow.id = `youngster_${item["מספר הצעיר"]}`;
 
     tableData.forEach((element) => {
       const tableColumn = tableRow.insertCell();
@@ -221,7 +223,11 @@ const sortTableByButton = (event) => {
     .sort(compareTableRows(columnToSortBy, arrowType))
     .forEach((row) => tableBody.appendChild(row));
 
-  scrollToTableRow(currentlyClickedYoungsters[0]);
+  const lastClickedYoungster = JSON.parse(
+    localStorage.getItem("currentlyClickedYoungsters")
+  )[0];
+
+  scrollToTableRow(document.getElementById(lastClickedYoungster));
 };
 
 const compareTableRows = (columnNumber, arrowType) => (current, next) => {
@@ -245,19 +251,46 @@ const compareTableRows = (columnNumber, arrowType) => (current, next) => {
   return 0;
 };
 
-let currentlyClickedYoungsters = [];
+//to local
+// let currentlyClickedYoungsters = [];
+// localStorage.setItem("currentlyClickedYoungsters", JSON.stringify([]));
+
+const setCurrentlyClickedYoungstersArray = () => {
+  let currentlyClickedYoungsters = JSON.parse(
+    localStorage.getItem("currentlyClickedYoungsters")
+  );
+
+  localStorage.setItem("currentlyClickedYoungsters", JSON.stringify([]));
+
+  if (currentlyClickedYoungsters !== null) {
+    currentlyClickedYoungsters.reverse();
+    currentlyClickedYoungsters.forEach((youngsterId) => {
+      console.log(currentlyClickedYoungsters);
+      document.getElementById(youngsterId).firstChild.click();
+    });
+  }
+};
+
 const ONE_SET_OF_DETAILS = 1;
 const DETAILS_ADDER = 2;
 
 //specific details---------------------------------------------------------------
 const setLastMode = () => {
-  const currentMode = JSON.parse(localStorage.getItem("currentMode"));
+  let currentMode = JSON.parse(localStorage.getItem("currentMode"));
+
   if (currentMode === null) {
-    localStorage.setItem("currentMode", ONE_SET_OF_DETAILS);
+    currentMode = ONE_SET_OF_DETAILS;
   }
+
+  currentMode =
+    currentMode === DETAILS_ADDER ? ONE_SET_OF_DETAILS : DETAILS_ADDER;
+
+  localStorage.setItem("currentMode", currentMode);
+
+  document.getElementById("youngsters_details_adder_mode").click();
 };
 
-const detailsAdderMode = (event) => {
+const changeMode = (event) => {
   let currentMode = JSON.parse(localStorage.getItem("currentMode"));
 
   currentMode =
@@ -265,10 +298,18 @@ const detailsAdderMode = (event) => {
 
   localStorage.setItem("currentMode", currentMode);
 
-  if (currentMode === ONE_SET_OF_DETAILS) {
-    clearCurrentlyClickedYoungsters();
+  let currentlyClickedYoungsters = JSON.parse(
+    localStorage.getItem("currentlyClickedYoungsters")
+  );
 
-    scrollToTableRow(currentlyClickedYoungsters[0]);
+  const lastClickedYoungster = document.getElementById(
+    currentlyClickedYoungsters[0]
+  );
+
+  if (currentMode === ONE_SET_OF_DETAILS) {
+    clearCurrentlyClickedYoungsters(currentlyClickedYoungsters);
+
+    scrollToTableRow(lastClickedYoungster);
 
     const specificDetailsText = document.getElementById(
       "specific_details_boxes_container"
@@ -277,12 +318,8 @@ const detailsAdderMode = (event) => {
     event.target.classList.remove("youngsters_details_adder_mode_active");
     event.target.textContent = "+";
   } else {
-    currentlyClickedYoungsters[0]?.classList.add(
-      "multiple_youngsters_clicked_mode"
-    );
-    currentlyClickedYoungsters[0]?.classList.remove(
-      "one_youngster_clicked_mode"
-    );
+    lastClickedYoungster?.classList.add("multiple_youngsters_clicked_mode");
+    lastClickedYoungster?.classList.remove("one_youngster_clicked_mode");
 
     event.target.classList.add("youngsters_details_adder_mode_active");
     event.target.textContent = "-";
@@ -305,15 +342,34 @@ const showSpecificDetailsOfYoungster = (event) => {
     currentlyClickedYoungsterElement.children[0].textContent;
   const youngsterClicked = getYoungsterByNumber(youngsterNumber);
 
-  if (!currentlyClickedYoungsters.includes(currentlyClickedYoungsterElement)) {
+  let currentlyClickedYoungsters = JSON.parse(
+    localStorage.getItem("currentlyClickedYoungsters")
+  );
+
+  console.log(currentlyClickedYoungsters);
+
+  console.log(currentlyClickedYoungsterElement.id);
+
+  if (
+    !currentlyClickedYoungsters.includes(currentlyClickedYoungsterElement.id)
+  ) {
     currentlyClickedYoungsters = [
-      currentlyClickedYoungsterElement,
+      currentlyClickedYoungsterElement.id,
       ...currentlyClickedYoungsters,
     ];
 
+    localStorage.setItem(
+      "currentlyClickedYoungsters",
+      JSON.stringify(currentlyClickedYoungsters)
+    );
+
     const currentMode = JSON.parse(localStorage.getItem("currentMode"));
 
-    matchSettingsToCurrentMode(currentlyClickedYoungsterElement, currentMode);
+    matchSettingsToCurrentMode(
+      currentlyClickedYoungsterElement,
+      currentMode,
+      currentlyClickedYoungsters
+    );
 
     addDetails(
       specifiedData,
@@ -325,7 +381,7 @@ const showSpecificDetailsOfYoungster = (event) => {
     specificDetailsText.scrollTop = 0;
   } else {
     const index = currentlyClickedYoungsters.indexOf(
-      currentlyClickedYoungsterElement
+      currentlyClickedYoungsterElement.id
     );
 
     currentlyClickedYoungsterElement.classList.remove(
@@ -334,6 +390,11 @@ const showSpecificDetailsOfYoungster = (event) => {
     );
 
     currentlyClickedYoungsters.splice(index, 1);
+
+    localStorage.setItem(
+      "currentlyClickedYoungsters",
+      JSON.stringify(currentlyClickedYoungsters)
+    );
 
     const specificDetailsToRemove = document.getElementById(
       `specific_details_youngster_${youngsterClicked["מספר הצעיר"]}`
@@ -354,10 +415,11 @@ const scrollToTableRow = (currentlyClickedYoungsterElement) => {
 
 const matchSettingsToCurrentMode = (
   currentlyClickedYoungsterElement,
-  currentMode
+  currentMode,
+  currentlyClickedYoungsters
 ) => {
   if (currentMode !== DETAILS_ADDER) {
-    clearCurrentlyClickedYoungsters();
+    clearCurrentlyClickedYoungsters(currentlyClickedYoungsters);
   }
 
   currentlyClickedYoungsterElement.classList.add(
@@ -369,9 +431,10 @@ const matchSettingsToCurrentMode = (
   );
 };
 
-const clearCurrentlyClickedYoungsters = () => {
+const clearCurrentlyClickedYoungsters = (currentlyClickedYoungsters) => {
   //clears currently clicked youngsters exept first clicked
-  currentlyClickedYoungsters.forEach((youngster) => {
+  currentlyClickedYoungsters.forEach((youngsterId) => {
+    const youngster = document.getElementById(youngsterId);
     youngster.classList.remove(
       "multiple_youngsters_clicked_mode",
       "one_youngster_clicked_mode"
@@ -379,9 +442,14 @@ const clearCurrentlyClickedYoungsters = () => {
   });
 
   if (currentlyClickedYoungsters.length > 0) {
-    currentlyClickedYoungsters = currentlyClickedYoungsters.slice(0, 1);
+    localStorage.setItem(
+      "currentlyClickedYoungsters",
+      JSON.stringify(currentlyClickedYoungsters.slice(0, 1))
+    );
 
-    currentlyClickedYoungsters[0].classList.add("one_youngster_clicked_mode");
+    document
+      .getElementById(currentlyClickedYoungsters[0])
+      .classList.add("one_youngster_clicked_mode");
   }
 };
 
