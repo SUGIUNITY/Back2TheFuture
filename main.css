@@ -359,6 +359,11 @@ body {
   border-top-color: rgb(108, 141, 194);
 }
 
+.arrow_clicked {
+  border-top-color: rgb(108, 141, 194);
+  border-bottom-color: rgb(108, 141, 194);
+}
+
 #all_details_table {
   width: 100%;
   text-align: start;
@@ -437,6 +442,7 @@ td {
 .specific_details_text_box {
   position: relative;
   max-width: 30%;
+  width: 22vmin;
 }
 
 .specific_details_text {

@@ -125,6 +125,7 @@ const showYoungsters = (event) => {
 
     setLastMode();
     setCurrentlyClickedYoungstersArray();
+    setSortArrow();
   } else {
     console.log("youngsters is empty or currently shown");
   }
@@ -218,17 +219,53 @@ const sortTableByButton = (event) => {
 
   const tableRows = [...tableBody.children];
 
-  const arrowType = arrow.classList.contains("arrow_up") ? -1 : 1;
+  const arrowTypeToDirection = { up: -1, down: 1 };
+
+  const arrowType = arrow.classList.contains("arrow_up") ? "up" : "down";
+
+  arrowClickIndication(arrow, columnToSortBy, arrowType);
 
   tableRows
-    .sort(compareTableRows(columnToSortBy, arrowType))
+    .sort(compareTableRows(columnToSortBy, arrowTypeToDirection[arrowType]))
     .forEach((row) => tableBody.appendChild(row));
 
   const lastClickedYoungster = JSON.parse(
     localStorage.getItem("currentlyClickedYoungsters")
   )[0];
 
-  scrollToTableRow(document.getElementById(lastClickedYoungster));
+  if (lastClickedYoungster) {
+    scrollToTableRow(document.getElementById(lastClickedYoungster));
+  }
+};
+
+const arrowClickIndication = (arrowClicked, arrowColumn, arrowType) => {
+  arrowClicked.classList.add("arrow_clicked");
+
+  const previousArrowElement = getArrowElement();
+
+  previousArrowElement.classList.remove("arrow_clicked");
+
+  localStorage.setItem("sortArrow", `${arrowColumn}_${arrowType}`);
+};
+
+const getArrowElement = () => {
+  const arrowOrderInArrowBox = { up: 0, down: 1 };
+
+  const previousArrow = localStorage.getItem("sortArrow").split("_");
+
+  const previousArrowColumn = previousArrow[0];
+  const previousArrowType = previousArrow[1];
+
+  const previousArrowHeader = document.getElementById(
+    `youngsters_column_${previousArrowColumn}`
+  );
+
+  const previousArrowElement =
+    previousArrowHeader.firstChild.lastChild.children[
+      arrowOrderInArrowBox[previousArrowType]
+    ];
+
+  return previousArrowElement;
 };
 
 const compareTableRows = (columnNumber, arrowType) => (current, next) => {
@@ -252,6 +289,16 @@ const compareTableRows = (columnNumber, arrowType) => (current, next) => {
   return 0;
 };
 
+const setSortArrow = () => {
+  const sortArrow = localStorage.getItem("sortArrow");
+
+  if (sortArrow === null) {
+    localStorage.setItem("sortArrow", "0_up");
+  }
+
+  getArrowElement().click();
+};
+
 //to local
 // let currentlyClickedYoungsters = [];
 // localStorage.setItem("currentlyClickedYoungsters", JSON.stringify([]));
@@ -266,7 +313,6 @@ const setCurrentlyClickedYoungstersArray = () => {
   if (currentlyClickedYoungsters !== null) {
     currentlyClickedYoungsters.reverse();
     currentlyClickedYoungsters.forEach((youngsterId) => {
-      console.log(youngsterId);
       document.getElementById(youngsterId).firstChild.click();
     });
   }
