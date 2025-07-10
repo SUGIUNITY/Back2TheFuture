@@ -18,7 +18,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
   lastFocusedButton().click();
 });
 
-//button pressed---------------------------------------------------------------------
 const sideButtons = [...document.getElementsByClassName("side_button")];
 
 const imageDirectory = "./images";
@@ -69,7 +68,7 @@ const focusButton = (event) => {
   localStorage.setItem("currentSidebarButtonPressed", event.target.id);
 };
 
-//clock---------------------------------------------------------------------
+//make into localStorage
 let is_clock_running = true;
 let clockInterval = null;
 
@@ -103,7 +102,6 @@ const updateLastEnterTime = () => {
   })}`;
 };
 
-//youngsters---------------------------------------------------------------
 const showYoungsters = (event) => {
   const tableData = ["מספר הצעיר", "שם הצעיר", "מיקום מגורים", "טלפון"];
 
@@ -117,10 +115,8 @@ const showYoungsters = (event) => {
 
     const table = document.getElementById("all_details_table");
 
-    // table title
     createTableHeader(table, tableData);
 
-    //table data
     addYoungstersToTable(table, tableData, youngsters);
 
     setLastMode();
@@ -239,11 +235,10 @@ const sortTableByButton = (event) => {
 };
 
 const arrowClickIndication = (arrowClicked, arrowColumn, arrowType) => {
-  arrowClicked.classList.add("arrow_clicked");
-
   const previousArrowElement = getArrowElement();
 
   previousArrowElement.classList.remove("arrow_clicked");
+  arrowClicked.classList.add("arrow_clicked");
 
   localStorage.setItem("sortArrow", `${arrowColumn}_${arrowType}`);
 };
@@ -299,10 +294,6 @@ const setSortArrow = () => {
   getArrowElement().click();
 };
 
-//to local
-// let currentlyClickedYoungsters = [];
-// localStorage.setItem("currentlyClickedYoungsters", JSON.stringify([]));
-
 const setCurrentlyClickedYoungstersArray = () => {
   let currentlyClickedYoungsters = JSON.parse(
     localStorage.getItem("currentlyClickedYoungsters")
@@ -321,7 +312,6 @@ const setCurrentlyClickedYoungstersArray = () => {
 const ONE_SET_OF_DETAILS = 1;
 const DETAILS_ADDER = 2;
 
-//specific details---------------------------------------------------------------
 const setLastMode = () => {
   let currentMode = JSON.parse(localStorage.getItem("currentMode"));
 
@@ -386,7 +376,6 @@ const showSpecificDetailsOfYoungster = (event) => {
 
   const currentlyClickedYoungsterElement = event.target.parentElement;
 
-  //scroll to child
   scrollToTableRow(currentlyClickedYoungsterElement);
 
   const youngsterNumber =
@@ -479,7 +468,6 @@ const matchSettingsToCurrentMode = (
 };
 
 const clearCurrentlyClickedYoungsters = (currentlyClickedYoungsters) => {
-  //clears currently clicked youngsters exept first clicked
   currentlyClickedYoungsters.forEach((youngsterId) => {
     const youngster = document.getElementById(youngsterId);
     youngster.classList.remove(
@@ -514,7 +502,6 @@ const addDetails = (
   specificDetailsText,
   currentMode
 ) => {
-  //DETAILS_ADDER
   const detailsBox = document.createElement("div");
   detailsBox.id = `specific_details_youngster_${youngsterClicked["מספר הצעיר"]}`;
   detailsBox.classList.add("specific_details_box");
@@ -537,20 +524,12 @@ const addDetails = (
     }
   });
 
-  // console.log(
-  //   document
-  //     .getElementsByClassName("specific_details_text")[0]
-  //     .getBoundingClientRect()
-  // );
-
-  //ONE_SET_OF_DETAILS
   if (currentMode === ONE_SET_OF_DETAILS) {
     removeSpecificDetailsShown(specificDetailsText);
   }
 };
 
 const removeSpecificDetailsShown = (specificDetailsText) => {
-  //removes all children of details exept first one
   let children = [...specificDetailsText.children];
 
   children = children.slice(1, children.length);
@@ -558,13 +537,6 @@ const removeSpecificDetailsShown = (specificDetailsText) => {
   children.forEach((child) => {
     specificDetailsText.removeChild(child);
   });
-
-  // while (
-  //   currentMode === ONE_SET_OF_DETAILS &&
-  //   specificDetailsText.children.length > 1
-  // ) {
-  //   specificDetailsText.removeChild(specificDetailsText.firstChild);
-  // }
 };
 
 const createSpecificDetailsToolTip = (event) => {
