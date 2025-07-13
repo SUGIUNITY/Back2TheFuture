@@ -286,6 +286,10 @@ body {
   background: #395ac5;
 }
 
+#all_details_data_box::-webkit-scrollbar-track {
+  margin-top: 5vmin;
+}
+
 #all_details_data_box {
   background-color: white;
   overflow-y: auto;
@@ -419,6 +423,10 @@ td {
   white-space: break-spaces;
   padding: 0.5vmin;
   padding-right: 1.5vmin;
+}
+
+tbody {
+  overflow-y: auto;
 }
 
 #specific_details_boxes_container {
