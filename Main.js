@@ -1,7 +1,7 @@
 import { youngsters } from "./data.js";
 
 document.addEventListener("DOMContentLoaded", (event) => {
-  manageClock();
+  setClock();
   updateLastEnterTime();
 
   document.getElementById("start_clock").addEventListener("click", manageClock);
@@ -69,21 +69,38 @@ const focusButton = (event) => {
 };
 
 //make into localStorage
-let is_clock_running = false;
+// let is_clock_running = false;
 let clockInterval = null;
 
+const setClock = () => {
+  const is_clock_running = JSON.parse(localStorage.getItem("isClockRunning"));
+
+  if (is_clock_running === null) {
+    localStorage.setItem("isClockRunning", JSON.stringify(false));
+  }
+
+  manageClock();
+};
+
 const manageClock = (event) => {
-  if (is_clock_running) {
+  let isClockRunning = JSON.parse(localStorage.getItem("isClockRunning"));
+
+  if (event !== undefined) {
+    localStorage.setItem("isClockRunning", JSON.stringify(!isClockRunning));
+    isClockRunning = !isClockRunning;
+  }
+
+  if (isClockRunning === true) {
+    console.log("ok");
     showClockCurrentTime();
     clockInterval = setInterval(showClockCurrentTime, 1000);
     document.getElementById("start_clock").textContent = "הפסק";
   } else {
+    console.log("blas");
     showClockCurrentTime();
-    clearTimeout(clockInterval);
+    clearInterval(clockInterval);
     document.getElementById("start_clock").textContent = "הפעל";
   }
-
-  is_clock_running = !is_clock_running;
 };
 
 const showClockCurrentTime = () => {
