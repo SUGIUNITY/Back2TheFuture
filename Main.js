@@ -347,10 +347,6 @@ const changeMode = (event) => {
     if (currentMode === ONE_SET_OF_DETAILS) {
       clearCurrentlyClickedYoungsters(currentlyClickedYoungsters);
 
-      if (lastClickedYoungster) {
-        scrollToTableRow(lastClickedYoungster);
-      }
-
       const specificDetailsText = document.getElementById(
         "specific_details_boxes_container"
       );
