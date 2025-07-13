@@ -77,6 +77,7 @@ body {
   border-width: 0.3vmin;
   padding-inline: 1.5vmin;
   margin-left: 1.5vmin;
+  cursor: pointer;
 }
 
 .clock_box {
@@ -150,6 +151,7 @@ body {
   border-radius: 1vmin;
   border: 0.2vmin solid black;
   white-space: nowrap;
+  cursor: pointer;
 }
 
 .side_button:hover {
@@ -232,6 +234,7 @@ body {
   color: white;
   font-size: 3vmin;
   border: 0;
+  cursor: pointer;
 }
 
 .youngsters_details_adder_mode_active {
@@ -260,14 +263,6 @@ body {
   justify-content: center;
 }
 
-.scroll {
-  background-color: white;
-  overflow-y: auto;
-  width: inherit;
-  height: 40vmin;
-  direction: ltr;
-}
-
 ::-webkit-scrollbar {
   width: 2vmin;
 }
@@ -280,6 +275,7 @@ body {
 ::-webkit-scrollbar-thumb {
   background: #506dceb8;
   border-radius: 2.5vmin;
+  cursor: pointer;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -426,6 +422,7 @@ td {
 }
 
 tbody {
+  cursor: pointer;
   overflow-y: auto;
 }
 
