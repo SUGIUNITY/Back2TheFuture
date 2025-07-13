@@ -69,15 +69,16 @@ const focusButton = (event) => {
 };
 
 //make into localStorage
-let is_clock_running = true;
+let is_clock_running = false;
 let clockInterval = null;
 
 const manageClock = (event) => {
   if (is_clock_running) {
-    startClock();
-    clockInterval = setInterval(startClock, 1000);
+    showClockCurrentTime();
+    clockInterval = setInterval(showClockCurrentTime, 1000);
     document.getElementById("start_clock").textContent = "הפסק";
   } else {
+    showClockCurrentTime();
     clearTimeout(clockInterval);
     document.getElementById("start_clock").textContent = "הפעל";
   }
@@ -85,7 +86,7 @@ const manageClock = (event) => {
   is_clock_running = !is_clock_running;
 };
 
-const startClock = () => {
+const showClockCurrentTime = () => {
   document.getElementById("clock_value").textContent =
     new Date().toLocaleTimeString("he-IL", {
       hour12: false,
