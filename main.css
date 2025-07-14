@@ -394,6 +394,10 @@ body {
   background-color: #95a7e3b8;
 }
 
+.table_row_multiple_mode:hover {
+  background-color: #b676e7b8 !important;
+}
+
 .one_youngster_clicked_mode {
   background-color: #95a7e3b8;
 }

@@ -365,27 +365,48 @@ const changeMode = (event) => {
     .getItem("currentlyClickedYoungsters")
     ?.split(",");
 
-  if (currentlyClickedYoungsters !== undefined) {
-    const lastClickedYoungster = document.getElementById(
-      youngsterNumberToYoungsterId(currentlyClickedYoungsters[0])
-    );
+  const lastClickedYoungster =
+    currentlyClickedYoungsters === undefined
+      ? undefined
+      : document.getElementById(
+          youngsterNumberToYoungsterId(currentlyClickedYoungsters[0])
+        );
 
-    if (currentMode === ONE_SET_OF_DETAILS) {
+  if (currentMode === ONE_SET_OF_DETAILS) {
+    if (currentlyClickedYoungsters) {
       clearCurrentlyClickedYoungsters(currentlyClickedYoungsters);
-
-      const specificDetailsText = document.getElementById(
-        "specific_details_boxes_container"
-      );
-      removeSpecificDetailsShown(specificDetailsText);
-      event.target.classList.remove("youngsters_details_adder_mode_active");
-      event.target.textContent = "+";
-    } else {
-      lastClickedYoungster?.classList.add("multiple_youngsters_clicked_mode");
-      lastClickedYoungster?.classList.remove("one_youngster_clicked_mode");
-
-      event.target.classList.add("youngsters_details_adder_mode_active");
-      event.target.textContent = "-";
     }
+
+    const specificDetailsText = document.getElementById(
+      "specific_details_boxes_container"
+    );
+    removeSpecificDetailsShown(specificDetailsText);
+    event.target.classList.remove("youngsters_details_adder_mode_active");
+    event.target.textContent = "+";
+  } else {
+    lastClickedYoungster?.classList.add("multiple_youngsters_clicked_mode");
+    lastClickedYoungster?.classList.remove("one_youngster_clicked_mode");
+
+    event.target.classList.add("youngsters_details_adder_mode_active");
+    event.target.textContent = "-";
+  }
+
+  changeRowHoverColor();
+};
+
+const changeRowHoverColor = () => {
+  const classModeName = "table_row_multiple_mode";
+  const rowsInMode = document.getElementsByClassName(classModeName);
+
+  if (rowsInMode.length > 0) {
+    rowsInMode.forEach((row) => {
+      row.classList.remove(classModeName);
+    });
+  } else {
+    const tableRows = document.getElementsByClassName("table_row");
+    [...tableRows].forEach((row) => {
+      row.classList.add(classModeName);
+    });
   }
 };
 
@@ -413,6 +434,13 @@ const showSpecificDetailsOfYoungster = (event) => {
   }
 
   if (!currentlyClickedYoungsters.includes(youngsterNumber)) {
+    const lastClickedYoungster = document.getElementById(
+      youngsterNumberToYoungsterId(currentlyClickedYoungsters[0])
+    );
+
+    lastClickedYoungster?.classList.remove("multiple_youngsters_clicked_mode");
+    lastClickedYoungster?.classList.add("one_youngster_clicked_mode");
+
     currentlyClickedYoungsters = [
       youngsterNumber,
       ...currentlyClickedYoungsters,
@@ -543,8 +571,6 @@ const addDetails = (
     attributeBox.appendChild(attribute);
 
     detailsBox.appendChild(attributeBox);
-
-    console.log(attribute.offsetWidth + " " + attribute.scrollWidth);
 
     if (attribute.offsetWidth < attribute.scrollWidth) {
       attributeBox.addEventListener("mouseenter", createSpecificDetailsToolTip);
