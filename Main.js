@@ -396,15 +396,15 @@ const changeMode = (event) => {
 
 const changeRowHoverColor = () => {
   const classModeName = "table_row_multiple_mode";
-  const rowsInMode = document.getElementsByClassName(classModeName);
+  const rowsInMode = [...document.getElementsByClassName(classModeName)];
 
   if (rowsInMode.length > 0) {
     rowsInMode.forEach((row) => {
       row.classList.remove(classModeName);
     });
   } else {
-    const tableRows = document.getElementsByClassName("table_row");
-    [...tableRows].forEach((row) => {
+    const tableRows = [...document.getElementsByClassName("table_row")];
+    tableRows.forEach((row) => {
       row.classList.add(classModeName);
     });
   }
