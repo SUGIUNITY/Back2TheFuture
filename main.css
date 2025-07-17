@@ -220,6 +220,7 @@ body {
 }
 
 .details_title {
+  margin-top: 0.5vmin;
   position: absolute;
 }
 
@@ -286,6 +287,10 @@ body {
   margin-top: 5vmin;
 }
 
+#specific_details_boxes_container::-webkit-scrollbar-track {
+  margin-bottom: 1vmin;
+}
+
 #all_details_data_box {
   background-color: white;
   overflow-y: auto;
@@ -315,6 +320,7 @@ body {
 
   border-bottom: 1.8vmin solid rgb(150, 33, 33);
   margin-bottom: 0.3vmin;
+  cursor: pointer;
 }
 
 .arrow_up::after {
@@ -339,6 +345,7 @@ body {
   border-right: 1.4vmin solid transparent;
 
   border-top: 1.8vmin solid rgb(150, 33, 33);
+  cursor: pointer;
 }
 
 .arrow_down::after {
