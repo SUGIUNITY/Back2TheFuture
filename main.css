@@ -381,6 +381,7 @@ body {
   text-wrap: nowrap;
   border-spacing: 0.4vmin;
   direction: rtl;
+  font-size: clamp(1.5vmin, 1.8vw, 3vmin);
 }
 
 .details_table_header {
@@ -427,7 +428,6 @@ body {
 }
 
 td {
-  white-space: break-spaces;
   padding: 0.5vmin;
   padding-right: 1.5vmin;
 }

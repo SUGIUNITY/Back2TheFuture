@@ -160,3 +160,12 @@ export const youngsters = [
     ספר: "המתכנת המתמחה",
   },
 ];
+
+export const youngstersFields = {
+  YOUNGSTER_NUMBER: "מספר הצעיר",
+  YOUNGSTER_NAME: "שם הצעיר",
+  RESIDENCE: "מיקום מגורים",
+  PHONE_NUMBER: "טלפון",
+  HOBBY: "תחביב",
+  BOOK: "ספר",
+};
