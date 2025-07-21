@@ -698,13 +698,11 @@ const matchYoungstersSettingsToMode = (
     clearCurrentlyClickedYoungsters(currentlyClickedYoungsters);
   }
 
-  currentlyClickedYoungsterElement?.classList.add(
-    `${
-      currentMode === ONE_SET_OF_DETAILS
-        ? ONE_YOUNGSTER_CLICKED_MODE_CLASS
-        : MULTIPLE_YOUNGSTERS_CLICKED_MODE_CLASS
-    }`
-  );
+  if (currentlyClickedYoungsterElement !== undefined) {
+    changeBackgroundColorOfYoungsterBasedOnMode(
+      currentlyClickedYoungsterElement
+    );
+  }
 };
 
 const clearCurrentlyClickedYoungsters = (currentlyClickedYoungsters) => {
@@ -836,6 +834,32 @@ const removeSpecificYoungster = (event) => {
     getSpecificDetailsBoxByYoungsterNumber(youngsterNumber);
 
   specificDetailsText.removeChild(specificDetailsToRemove);
+
+  const lastClickedYoungsterNumber = getCurrentlyClickedYoungstersAsArray()[0];
+
+  const lastClickedYoungster = document.getElementById(
+    youngsterNumberToYoungsterId(lastClickedYoungsterNumber)
+  );
+
+  if (lastClickedYoungster !== undefined) {
+    changeBackgroundColorOfYoungsterBasedOnMode(lastClickedYoungster);
+  }
+};
+
+const changeBackgroundColorOfYoungsterBasedOnMode = (youngsterElement) => {
+  removeYoungsterBackground(youngsterElement);
+
+  const currentMode = JSON.parse(
+    getValueFromLocalStorage(LOCALSTORAGE_CURRENT_MODE)
+  );
+
+  youngsterElement.classList.add(
+    `${
+      currentMode === ONE_SET_OF_DETAILS
+        ? ONE_YOUNGSTER_CLICKED_MODE_CLASS
+        : MULTIPLE_YOUNGSTERS_CLICKED_MODE_CLASS
+    }`
+  );
 };
 
 const getCurrentlyClickedYoungstersAsArray = () => {
@@ -851,6 +875,9 @@ const getCurrentlyClickedYoungstersAsArray = () => {
 };
 
 const removeYoungsterBackground = (youngsterElement) => {
+  console.log(youngsterElement);
+  console.log("ok");
+
   youngsterElement.classList.remove(
     MULTIPLE_YOUNGSTERS_CLICKED_MODE_CLASS,
     ONE_YOUNGSTER_CLICKED_MODE_CLASS
