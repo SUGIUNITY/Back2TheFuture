@@ -335,14 +335,10 @@ const sortTableByButton = (event) => {
     .sort(compareTableRows(columnToSortBy, arrowTypeToDirection[arrowType]))
     .forEach((row) => tableBody.appendChild(row));
 
-  const lastClickedYoungster = getCurrentlyClickedYoungstersAsArray()[0];
+  const lastClickedYoungster = getLastClickedYoungsterElementFromLocalStorage();
 
   if (lastClickedYoungster) {
-    scrollToTableRow(
-      document.getElementById(
-        youngsterNumberToYoungsterId(lastClickedYoungster)
-      )
-    );
+    scrollToTableRow(lastClickedYoungster);
   }
 };
 
@@ -698,7 +694,7 @@ const matchYoungstersSettingsToMode = (
     clearCurrentlyClickedYoungsters(currentlyClickedYoungsters);
   }
 
-  if (currentlyClickedYoungsterElement !== undefined) {
+  if (currentlyClickedYoungsterElement != undefined) {
     changeBackgroundColorOfYoungsterBasedOnMode(
       currentlyClickedYoungsterElement
     );
@@ -835,15 +831,19 @@ const removeSpecificYoungster = (event) => {
 
   specificDetailsText.removeChild(specificDetailsToRemove);
 
-  const lastClickedYoungsterNumber = getCurrentlyClickedYoungstersAsArray()[0];
+  const lastClickedYoungster = getLastClickedYoungsterElementFromLocalStorage();
 
-  const lastClickedYoungster = document.getElementById(
-    youngsterNumberToYoungsterId(lastClickedYoungsterNumber)
-  );
-
-  if (lastClickedYoungster !== undefined) {
+  if (lastClickedYoungster != undefined) {
     changeBackgroundColorOfYoungsterBasedOnMode(lastClickedYoungster);
   }
+};
+
+const getLastClickedYoungsterElementFromLocalStorage = () => {
+  const lastClickedYoungsterNumber = getCurrentlyClickedYoungstersAsArray()[0];
+
+  return document.getElementById(
+    youngsterNumberToYoungsterId(lastClickedYoungsterNumber)
+  );
 };
 
 const changeBackgroundColorOfYoungsterBasedOnMode = (youngsterElement) => {
@@ -875,9 +875,6 @@ const getCurrentlyClickedYoungstersAsArray = () => {
 };
 
 const removeYoungsterBackground = (youngsterElement) => {
-  console.log(youngsterElement);
-  console.log("ok");
-
   youngsterElement.classList.remove(
     MULTIPLE_YOUNGSTERS_CLICKED_MODE_CLASS,
     ONE_YOUNGSTER_CLICKED_MODE_CLASS
