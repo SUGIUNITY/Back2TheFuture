@@ -1,5 +1,6 @@
 package sagi.Back_2_The_Future_Server.Controllers;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sagi.Back_2_The_Future_Server.Models.Youngster;
 import sagi.Back_2_The_Future_Server.Services.YoungstersService;
@@ -16,13 +17,17 @@ public class YoungstersController {
     }
 
     @GetMapping("")
-    public Youngster[] getYoungsters() {
+    public ResponseEntity<Youngster[]> getYoungsters() {
         return youngstersService.getYoungsters();
     }
 
     @PostMapping("/add-youngster")
-    public void addYoungster(@RequestBody Youngster youngster) {
-        youngstersService.addYoungster(youngster);
+    public ResponseEntity<Void> addYoungster(@RequestBody Youngster youngster) {
+        return youngstersService.addYoungster(youngster);
     }
 
+    @DeleteMapping("/delete-youngster/{id}")
+    public ResponseEntity<Void> deleteYoungsterById(@PathVariable("id") int id) {
+        return youngstersService.deleteYoungsterById(id);
+    }
 }
