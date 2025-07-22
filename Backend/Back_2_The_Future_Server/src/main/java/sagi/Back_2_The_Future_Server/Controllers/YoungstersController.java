@@ -21,6 +21,11 @@ public class YoungstersController {
         return youngstersService.getYoungsters();
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Youngster> getYoungsterById(@PathVariable("id") int id) {
+        return youngstersService.getYoungsterById(id);
+    }
+
     @PostMapping("/add-youngster")
     public ResponseEntity<Void> addYoungster(@RequestBody Youngster youngster) {
         return youngstersService.addYoungster(youngster);

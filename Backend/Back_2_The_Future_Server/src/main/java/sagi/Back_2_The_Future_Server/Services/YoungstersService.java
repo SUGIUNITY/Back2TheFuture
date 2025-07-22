@@ -2,6 +2,7 @@ package sagi.Back_2_The_Future_Server.Services;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import sagi.Back_2_The_Future_Server.Models.Youngster;
@@ -15,7 +16,11 @@ public class YoungstersService {
         this.youngstersRepository = youngstersRepository;
     }
 
-    public ResponseEntity<Youngster[]> getYoungsters() {
+    public ResponseEntity<Youngster> getYoungsterById(int id) {
+        return youngstersRepository.getYoungsterById(id);
+    }
+
+        public ResponseEntity<Youngster[]> getYoungsters() {
         return youngstersRepository.getYoungsters();
     }
 

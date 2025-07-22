@@ -19,6 +19,16 @@ public class YoungstersRepository {
        return new ResponseEntity<>(youngsters, HttpStatus.OK);
     }
 
+    public ResponseEntity<Youngster> getYoungsterById(int id) {
+        for (int iteratorIndex = 0; iteratorIndex < youngsters.length; iteratorIndex++) {
+            if (youngsters[iteratorIndex].getId() == id) {
+                return new ResponseEntity<>(youngsters[iteratorIndex], HttpStatus.OK);
+            }
+        }
+
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
     public ResponseEntity<Void> addYoungster(Youngster youngster) {
         Youngster[] newYoungsters = Arrays.copyOf(youngsters, youngsters.length + 1);
         newYoungsters[youngsters.length] = youngster;
