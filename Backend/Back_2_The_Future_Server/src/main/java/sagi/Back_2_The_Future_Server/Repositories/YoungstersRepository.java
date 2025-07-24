@@ -5,55 +5,39 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import sagi.Back_2_The_Future_Server.Models.Youngster;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 @Repository
 public class YoungstersRepository {
-    Youngster[] youngsters = new Youngster[]{
-            new Youngster(1, "Alice", "Tel Aviv", "050-1234567", "Reading", "Harry Potter"),
-            new Youngster(2, "Bob", "Haifa", "052-7654321", "Gaming", "Ender's Game"),
-            new Youngster(3, "Charlie", "Jerusalem", "053-1112233", "Swimming", "The Hobbit")
-    };
+    private ArrayList<Youngster> youngsters = new ArrayList<Youngster>();
 
-    public ResponseEntity<Youngster[]> getYoungsters() {
+    public YoungstersRepository() {
+        this.youngsters.add(new Youngster(1, "Alice", "Tel Aviv", "050-1234567", "Reading", "Harry Potter"));
+        this.youngsters.add(new Youngster(2, "Bob", "Haifa", "052-7654321", "Gaming", "Ender's Game"));
+        this.youngsters.add(new Youngster(3, "Charlie", "Jerusalem", "053-1112233", "Swimming", "The Hobbit"));
+    }
+    
+    public ResponseEntity<ArrayList<Youngster>> getYoungsters() {
        return new ResponseEntity<>(youngsters, HttpStatus.OK);
     }
 
-    public ResponseEntity<Youngster> getYoungsterById(int id) {
-        for (int iteratorIndex = 0; iteratorIndex < youngsters.length; iteratorIndex++) {
-            if (youngsters[iteratorIndex].getId() == id) {
-                return new ResponseEntity<>(youngsters[iteratorIndex], HttpStatus.OK);
-            }
-        }
+    public ResponseEntity<Youngster> getYoungsterById(int id) throws Exception {
+        final Youngster youngster = youngsters.stream().filter(young -> young.getId() == id).findFirst().orElseThrow(Exception::new);
 
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(youngster, HttpStatus.OK);
     }
 
-    public ResponseEntity<Void> addYoungster(Youngster youngster) {
-        Youngster[] newYoungsters = Arrays.copyOf(youngsters, youngsters.length + 1);
-        newYoungsters[youngsters.length] = youngster;
-        youngsters = newYoungsters;
+    public ResponseEntity<String> addYoungster(Youngster youngster) {
+        youngsters.add(youngster);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    public ResponseEntity<Void> deleteYoungsterById(int id) {
-        Youngster[] newYoungsters = new Youngster[youngsters.length - 1];
-        int lastIndexOfNewArray = 0;
+    public ResponseEntity<String> deleteYoungsterById(int id) throws Exception {
+        final Youngster youngsterToRemove = this.youngsters.stream().filter(young -> young.getId() == id).findFirst().orElseThrow(Exception::new);
+        youngsters.remove(youngsterToRemove);
 
-        for (int iteratorIndex = 0; iteratorIndex < youngsters.length; iteratorIndex++) {
-
-            if (youngsters[iteratorIndex].getId() != id) {
-                if (lastIndexOfNewArray == newYoungsters.length) {
-                    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-                }
-
-                newYoungsters[lastIndexOfNewArray] = youngsters[iteratorIndex];
-                lastIndexOfNewArray++;
-            }
-        }
-
-        youngsters = newYoungsters;
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

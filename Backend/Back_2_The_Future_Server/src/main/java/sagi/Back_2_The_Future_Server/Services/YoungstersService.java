@@ -8,27 +8,29 @@ import org.springframework.web.bind.annotation.RequestParam;
 import sagi.Back_2_The_Future_Server.Models.Youngster;
 import sagi.Back_2_The_Future_Server.Repositories.YoungstersRepository;
 
+import java.util.ArrayList;
+
 @Service
 public class YoungstersService {
-    private YoungstersRepository youngstersRepository;
+    private final YoungstersRepository youngstersRepository;
 
     public YoungstersService(YoungstersRepository youngstersRepository) {
         this.youngstersRepository = youngstersRepository;
     }
 
-    public ResponseEntity<Youngster> getYoungsterById(int id) {
+    public ResponseEntity<Youngster> getYoungsterById(int id) throws Exception {
         return youngstersRepository.getYoungsterById(id);
     }
 
-        public ResponseEntity<Youngster[]> getYoungsters() {
+        public ResponseEntity<ArrayList<Youngster>> getYoungsters() {
         return youngstersRepository.getYoungsters();
     }
 
-    public ResponseEntity<Void> addYoungster(Youngster youngster) {
+    public ResponseEntity<String> addYoungster(Youngster youngster) {
         return youngstersRepository.addYoungster(youngster);
     }
 
-    public ResponseEntity<Void> deleteYoungsterById(int id) {
+    public ResponseEntity<String> deleteYoungsterById(int id) throws Exception {
         return youngstersRepository.deleteYoungsterById(id);
     }
 }
