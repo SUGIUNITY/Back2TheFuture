@@ -13,7 +13,7 @@ import java.util.ArrayList;
 @RequestMapping("/youngsters")
 public class YoungstersController {
 
-    private YoungstersService youngstersService;
+    private final YoungstersService youngstersService;
 
     public YoungstersController(YoungstersService youngstersService) {
         this.youngstersService = youngstersService;
@@ -22,7 +22,7 @@ public class YoungstersController {
     @GetMapping("")
     public ResponseEntity<ArrayList<Youngster>> getYoungsters() {
         try {
-            return youngstersService.getYoungsters();
+            return this.youngstersService.getYoungsters();
         } catch (Exception exception) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -31,7 +31,7 @@ public class YoungstersController {
     @GetMapping("/{id}")
     public ResponseEntity<Youngster> getYoungsterById(@PathVariable("id") int id) {
         try {
-            return youngstersService.getYoungsterById(id);
+            return this.youngstersService.getYoungsterById(id);
         } catch (Exception exception) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -40,7 +40,7 @@ public class YoungstersController {
     @PostMapping("/add-youngster")
     public ResponseEntity<String> addYoungster(@RequestBody Youngster youngster) {
         try {
-            return youngstersService.addYoungster(youngster);
+            return this.youngstersService.addYoungster(youngster);
         } catch (Exception exception) {
             return new ResponseEntity<>(exception.toString(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -49,7 +49,7 @@ public class YoungstersController {
     @DeleteMapping("/delete-youngster/{id}")
     public ResponseEntity<String> deleteYoungsterById(@PathVariable("id") int id) {
         try {
-            return youngstersService.deleteYoungsterById(id);
+            return this.youngstersService.deleteYoungsterById(id);
         } catch (Exception exception) {
             return new ResponseEntity<>(exception.toString(), HttpStatus.NOT_FOUND);
         }

@@ -17,26 +17,26 @@ public class YoungstersRepository {
         this.youngsters.add(new Youngster(2, "Bob", "Haifa", "052-7654321", "Gaming", "Ender's Game"));
         this.youngsters.add(new Youngster(3, "Charlie", "Jerusalem", "053-1112233", "Swimming", "The Hobbit"));
     }
-    
+
     public ResponseEntity<ArrayList<Youngster>> getYoungsters() {
-       return new ResponseEntity<>(youngsters, HttpStatus.OK);
+       return new ResponseEntity<>(this.youngsters, HttpStatus.OK);
     }
 
     public ResponseEntity<Youngster> getYoungsterById(int id) throws Exception {
-        final Youngster youngster = youngsters.stream().filter(young -> young.getId() == id).findFirst().orElseThrow(Exception::new);
+        final Youngster youngster = this.youngsters.stream().filter(young -> young.getId() == id).findFirst().orElseThrow(Exception::new);
 
         return new ResponseEntity<>(youngster, HttpStatus.OK);
     }
 
     public ResponseEntity<String> addYoungster(Youngster youngster) {
-        youngsters.add(youngster);
+        this.youngsters.add(youngster);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     public ResponseEntity<String> deleteYoungsterById(int id) throws Exception {
         final Youngster youngsterToRemove = this.youngsters.stream().filter(young -> young.getId() == id).findFirst().orElseThrow(Exception::new);
-        youngsters.remove(youngsterToRemove);
+        this.youngsters.remove(youngsterToRemove);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
