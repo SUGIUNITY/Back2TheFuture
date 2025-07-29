@@ -1,28 +1,56 @@
 package sagi.Back_2_The_Future_Server.Models;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+
+@Document(collection = "youngsters")
 public class Youngster {
-    private int id;
+    @Id
+    private String id;
+
+    @Field("youngster_id")
+    private int youngsterId;
+
+    @Field("name")
     private String name;
-    private String residence;
+
+    @Field("location")
+    private String location;
+
+    @Field("phone_number")
     private String phoneNumber;
+
+    @Field("hobby")
     private String hobby;
+
+    @Field("book")
     private String book;
 
-    public Youngster(int id, String name, String residence, String phoneNumber, String hobby, String book) {
+    public Youngster(String id, int youngsterId, String name, String location, String phoneNumber, String hobby, String book) {
         setId(id);
+        setYoungsterId(youngsterId);
         setName(name);
-        setResidence(residence);
+        setLocation(location);
         setPhoneNumber(phoneNumber);
         setHobby(hobby);
         setBook(book);
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
+    }
+
+    public int getYoungsterId() {
+        return youngsterId;
+    }
+
+    public void setYoungsterId(int youngsterId) {
+        this.youngsterId = youngsterId;
     }
 
     public String getName() {
@@ -33,12 +61,12 @@ public class Youngster {
         this.name = name;
     }
 
-    public String getResidence() {
-        return residence;
+    public String getLocation() {
+        return location;
     }
 
-    public void setResidence(String residence) {
-        this.residence = residence;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public String getPhoneNumber() {

@@ -7,6 +7,7 @@ import sagi.Back_2_The_Future_Server.Models.Youngster;
 import sagi.Back_2_The_Future_Server.Services.YoungstersService;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 @RestController
@@ -20,7 +21,7 @@ public class YoungstersController {
     }
 
     @GetMapping("")
-    public ResponseEntity<ArrayList<Youngster>> getYoungsters() {
+    public ResponseEntity<List<Youngster>> getYoungsters() {
         try {
             return this.youngstersService.getYoungsters();
         } catch (Exception exception) {
