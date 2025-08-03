@@ -5,7 +5,8 @@ document.addEventListener("DOMContentLoaded", async (event) => {
   updateLastEnterTime();
 
   const YOUNGSTERS_ID = "youngsters";
-  youngsters = await fetchData("http://localhost:4567/youngsters");
+  const FRONTEND_URL = "http://localhost:4567/youngsters";
+  youngsters = await fetchData(FRONTEND_URL);
 
   document
     .getElementById(START_CLOCK_ID)
