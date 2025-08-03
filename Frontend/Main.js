@@ -1,4 +1,4 @@
-import { youngstersFields } from "./data.js";
+import { youngstersFieldsToHebrew, youngstersFields } from "./enums.js";
 
 document.addEventListener("DOMContentLoaded", async (event) => {
   setClock();
@@ -210,10 +210,10 @@ const updateLastEnterTime = () => {
 
 const showYoungsters = () => {
   const tableData = [
-    youngstersFields.YOUNGSTER_ID,
-    youngstersFields.YOUNGSTER_NAME,
-    youngstersFields.LOCATION,
-    youngstersFields.PHONE_NUMBER,
+    "YOUNGSTER_ID",
+    "YOUNGSTER_NAME",
+    "LOCATION",
+    "PHONE_NUMBER",
   ];
 
   const allDetailsDiv = document.getElementById(ALL_DETAILS_DIV_ID);
@@ -278,7 +278,9 @@ const createTableTitleColumn = (tableTitle, tableData, index) => {
   const titleColumnBox = document.createElement("div");
   titleColumnBox.classList.add(TABLE_TITLE_COLUMN_BOX_ID);
 
-  const titleText = document.createTextNode(tableData[index]);
+  const titleText = document.createTextNode(
+    youngstersFieldsToHebrew[tableData[index]]
+  );
 
   const sortButtonsBox = document.createElement("div");
   sortButtonsBox.classList.add(SORT_BUTTON_BOX_ID);
@@ -319,7 +321,11 @@ const addYoungstersToTable = (table, tableData, youngsters) => {
     tableData.forEach((element) => {
       const tableColumn = tableRow.insertCell();
       tableColumn.appendChild(
-        document.createTextNode(item[element] != undefined ? item[element] : "")
+        document.createTextNode(
+          item[youngstersFields[element]] != undefined
+            ? item[youngstersFields[element]]
+            : ""
+        )
       );
     });
   });
