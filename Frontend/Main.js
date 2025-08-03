@@ -1,10 +1,11 @@
-import { youngsters, youngstersFields } from "./data.js";
+import { youngstersFields } from "./data.js";
 
-document.addEventListener("DOMContentLoaded", (event) => {
+document.addEventListener("DOMContentLoaded", async (event) => {
   setClock();
   updateLastEnterTime();
 
   const YOUNGSTERS_ID = "youngsters";
+  youngsters = await fetchData("http://localhost:4567/youngsters");
 
   document
     .getElementById(START_CLOCK_ID)
@@ -21,6 +22,24 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
   lastFocusedButton().click();
 });
+
+const fetchData = async (url) => {
+  try {
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+};
+
+let youngsters = [];
 
 const START_CLOCK_ID = "start_clock";
 const SIDE_BUTTON_CLASS = "side_button";
@@ -191,9 +210,9 @@ const updateLastEnterTime = () => {
 
 const showYoungsters = () => {
   const tableData = [
-    youngstersFields.YOUNGSTER_NUMBER,
+    youngstersFields.YOUNGSTER_ID,
     youngstersFields.YOUNGSTER_NAME,
-    youngstersFields.RESIDENCE,
+    youngstersFields.LOCATION,
     youngstersFields.PHONE_NUMBER,
   ];
 
@@ -215,7 +234,7 @@ const showYoungsters = () => {
     setCurrentlyClickedYoungstersArray();
     setSortArrow();
   } else {
-    console.log("youngsters is empty or currently shown");
+    console.error("youngsters is empty or currently shown");
   }
 };
 
@@ -294,7 +313,7 @@ const addYoungstersToTable = (table, tableData, youngsters) => {
     tableRow.addEventListener("click", youngsterClickedEvent);
     tableRow.addEventListener("dblclick", removeSpecificYoungster);
     tableRow.id = youngsterNumberToYoungsterId(
-      item[youngstersFields.YOUNGSTER_NUMBER]
+      item[youngstersFields.YOUNGSTER_ID]
     );
 
     tableData.forEach((element) => {
@@ -729,9 +748,7 @@ const clearCurrentlyClickedYoungsters = (currentlyClickedYoungsters) => {
 
 const getYoungsterByNumber = (youngsterNumber) => {
   for (let index = 0; index < youngsters.length; index++) {
-    if (
-      youngsters[index][youngstersFields.YOUNGSTER_NUMBER] == youngsterNumber
-    ) {
+    if (youngsters[index][youngstersFields.YOUNGSTER_ID] == youngsterNumber) {
       return youngsters[index];
     }
   }
@@ -748,7 +765,7 @@ const addDetails = (youngsterClicked, specificDetailsText, currentMode) => {
 
   const detailsBox = document.createElement("div");
   detailsBox.id = `specific_details_youngster_${
-    youngsterClicked[youngstersFields.YOUNGSTER_NUMBER]
+    youngsterClicked[youngstersFields.YOUNGSTER_ID]
   }`;
   detailsBox.classList.add(SPECIFIC_DETAILS_BOX_CLASS);
 

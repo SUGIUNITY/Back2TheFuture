@@ -6,12 +6,11 @@ import org.springframework.web.bind.annotation.*;
 import sagi.Back_2_The_Future_Server.Models.Youngster;
 import sagi.Back_2_The_Future_Server.Services.YoungstersService;
 
-import java.util.ArrayList;
 import java.util.List;
-
 
 @RestController
 @RequestMapping("/youngsters")
+@CrossOrigin(origins = "http://127.0.0.1:5500")
 public class YoungstersController {
 
     private final YoungstersService youngstersService;
